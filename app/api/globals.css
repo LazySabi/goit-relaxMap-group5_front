@@ -75,7 +75,6 @@ a {
   padding: 0 20px;
 }
 
-/* For h1 and some page headdings*/
 .main-headding {
   font-weight: 700;
   font-size: 32px;
@@ -83,7 +82,6 @@ a {
   letter-spacing: -0.01em;
 }
 
-/* For section headdings*/
 .secondary-headding {
   font-weight: 700;
   font-size: 28px;
