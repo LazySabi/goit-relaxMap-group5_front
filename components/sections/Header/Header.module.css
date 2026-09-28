@@ -1,0 +1,176 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--background);
+  border-bottom: var(--border-primary);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 64px;
+}
+
+.navGroup {
+  display: none;
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navLink {
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--text-primary);
+  padding: 8px 0;
+  transition: color 0.2s ease;
+}
+
+.navLink:hover,
+.navLink:focus-visible {
+  color: var(--button-primary);
+}
+
+.authActions {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.signInBtn,
+.signUpBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 100px;
+  padding: 10px 20px;
+  border: var(--border-primary);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.signInBtn {
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.signInBtn:hover,
+.signInBtn:focus-visible {
+  background: var(--button-secondary-hover);
+}
+
+.signUpBtn {
+  background: var(--button-primary);
+  color: var(--text-secondary);
+  border-color: var(--button-primary);
+}
+
+.signUpBtn:hover,
+.signUpBtn:focus-visible {
+  background: var(--button-secondary-active);
+  border-color: var(--button-secondary-active);
+}
+
+.burger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.mobileMenu {
+  overflow: hidden;
+  max-height: 0;
+  background: var(--background);
+  border-bottom: 0 solid transparent;
+  transition: max-height 0.25s ease;
+}
+
+.mobileMenuOpen {
+  max-height: 420px;
+  border-bottom: var(--border-primary);
+}
+
+.mobileNavList {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 20px 16px;
+}
+
+.mobileNavLink {
+  display: block;
+  padding: 12px 0;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--text-primary);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.mobileAuthActions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 20px 20px;
+}
+
+.mobileAuthActions .signInBtn,
+.mobileAuthActions .signUpBtn {
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .inner {
+    height: 80px;
+  }
+
+  .navGroup {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .navList {
+    gap: 28px;
+  }
+
+  .burger,
+  .mobileMenu {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .inner {
+    height: 88px;
+  }
+
+  .navList {
+    gap: 36px;
+  }
+
+  .navLink {
+    font-size: 16px;
+  }
+
+  .signInBtn,
+  .signUpBtn {
+    font-size: 15px;
+    padding: 12px 24px;
+  }
+}

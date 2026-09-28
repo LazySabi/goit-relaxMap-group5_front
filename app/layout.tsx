@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
-import Header from "@/components/Header/Header";
-import Footer from "@/components/Footer/Footer";
-import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
+import Header from "../components/sections/Header/Header";
+import Footer from "../components/sections/Footer/Footer";
+import TanStackQueryProvider from "../components/providers/TanStackQueryProvider/TanStackQueryProvider";
 import { Montserrat } from "next/font/google";
-import AuthProvider from "@/components/AuthProvider/AuthProvider";
+import AuthProvider from "../components/providers/AuthProvider/AuthProvider";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -15,18 +15,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Notehub",
-  description: "Notes app",
-  openGraph: {
-    title: "Notehub",
-    description: "Notes app",
-    url: "https://notehub.example.com/notes/action/create",
-    images: [
-      {
-        url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
-      },
-    ],
-  },
+  title: "RelaxMap",
+  description: "RelaxMap",
 };
 
 export default function RootLayout({
@@ -37,16 +27,16 @@ export default function RootLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={roboto.variable}>
+    <html lang="uk" className={montserrat.variable}>
       <body>
-        <TanStackProvider>
+        <TanStackQueryProvider>
           <AuthProvider>
             <Header />
             {children}
             {modal}
             <Footer />
           </AuthProvider>
-        </TanStackProvider>
+        </TanStackQueryProvider>
       </body>
     </html>
   );
