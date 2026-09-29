@@ -16,18 +16,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Notehub",
-  description: "Notes app",
-  openGraph: {
-    title: "Notehub",
-    description: "Notes app",
-    url: "https://notehub.example.com/notes/action/create",
-    images: [
-      {
-        url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
-      },
-    ],
-  },
+  title: "RelaxMap",
+  description: "RelaxMap",
 };
 
 export default function RootLayout({
