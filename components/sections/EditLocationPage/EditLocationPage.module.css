@@ -1,0 +1,25 @@
+.message,
+.error {
+  width: 100%;
+  margin: 0;
+  padding: 40px 16px;
+
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.message {
+  color: #4a3024;
+}
+
+.error {
+  color: #c62828;
+}
+
+@media screen and (min-width: 768px) {
+  .message,
+  .error {
+    padding: 56px 32px;
+  }
+}

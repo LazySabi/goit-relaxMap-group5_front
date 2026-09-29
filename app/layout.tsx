@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { Montserrat } from "next/font/google";
 
 import "./globals.css";
-import Header from "@/components/Header/Header";
-import Footer from "@/components/Footer/Footer";
-import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
-import { Montserrat } from "next/font/google";
-import AuthProvider from "@/components/AuthProvider/AuthProvider";
+
+import Header from "@/components/sections/Header/Header";
+import Footer from "@/components/sections/Footer/Footer";
+import TanStackQueryProvider from "@/components/providers/TanStackQueryProvider/TanStackQueryProvider";
+import AuthProvider from "@/components/providers/AuthProvider/AuthProvider";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -37,17 +38,17 @@ export default function RootLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={roboto.variable}>
+    <html lang="en" className={montserrat.variable}>
       <body>
-        <TanStackProvider>
+        <TanStackQueryProvider>
           <AuthProvider>
             <Header />
             {children}
             {modal}
             <Footer />
           </AuthProvider>
-        </TanStackProvider>
+        </TanStackQueryProvider>
       </body>
     </html>
   );
-}
+} 
