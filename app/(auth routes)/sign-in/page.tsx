@@ -6,7 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import toast from "react-hot-toast";
 import { FiMap } from "react-icons/fi";
 
-import { signInValidationSchema } from "@/lib/validation/authValidation";
+import { signInValidationSchema } from "@/lib/api/validation/authValidation";
 import css from "./SignInPage.module.css";
 
 interface SignInValues {
