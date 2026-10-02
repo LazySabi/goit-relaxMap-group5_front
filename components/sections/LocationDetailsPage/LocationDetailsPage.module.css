@@ -1,0 +1,38 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+}
+
+.hero {
+  display: grid;
+  grid-template-areas:
+    "gallery"
+    "info";
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+  padding-block: 32px;
+}
+
+.gallery {
+  grid-area: gallery;
+  min-width: 0;
+}
+
+.info {
+  grid-area: info;
+  min-width: 0;
+}
+
+@media (min-width: 1440px) {
+  .hero {
+    grid-template-areas: "info gallery";
+    grid-template-columns:
+      minmax(0, 2fr)
+      minmax(0, 3fr);
+    align-items: center;
+    gap: 32px;
+    padding-block: 48px;
+  }
+}
