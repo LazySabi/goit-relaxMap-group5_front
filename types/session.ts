@@ -1,0 +1,3 @@
+type CheckSessionRequest = {
+    success: boolean;
+}
