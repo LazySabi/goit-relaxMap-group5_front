@@ -56,12 +56,16 @@ export const getRegions = async (): Promise<Region[]> => {
 
 export const getLocationById = async (
   locationId: string,
-): Promise<Location> => {
-  const { data } = await api.get<ApiResponse<Location>>(
+): Promise<LocationAuthor> => {
+  const { data } = await api.get<LocationAuthor>(
     `/locations/${locationId}`,
   );
 
-  return data.data;
+  return data;
+};
+export type LocationAuthor = {
+  id: string;
+  name: string;
 };
 
 const createFormData = (values: LocationFormData) => {
