@@ -105,3 +105,50 @@ export const updateLocation = async (
 
   return data.data;
 };
+export type LocationsSort = 'popular' | 'rating' | 'newest';
+
+export type LocationsQuery = {
+  page?: number;
+  limit?: number;
+  search?: string;
+  region?: string;
+  type?: string;
+  sort?: LocationsSort;
+};
+
+export type LocationsList = {
+  data: Location[];
+  page: number;
+  limit: number;
+  totalItems: number;
+  totalPages: number;
+  hasNextPage: boolean;
+};
+
+type BackendLocationsResponse = {
+  data: Location[];
+  pagination: {
+    page: number;
+    limit: number;
+    totalItems: number;
+    totalPages: number;
+    hasNextPage: boolean;
+  };
+};
+
+export const getLocations = async (
+  params: LocationsQuery,
+): Promise<LocationsList> => {
+  const { data } = await api.get<BackendLocationsResponse>('/locations', {
+    params,
+  });
+
+  return {
+    data: data.data,
+    page: data.pagination.page,
+    limit: data.pagination.limit,
+    totalItems: data.pagination.totalItems,
+    totalPages: data.pagination.totalPages,
+    hasNextPage: data.pagination.hasNextPage,
+  };
+};
