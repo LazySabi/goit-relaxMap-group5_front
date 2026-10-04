@@ -64,6 +64,14 @@ export const getLocationById = async (
   return data.data;
 };
 
+export const getPopularLocations = async (): Promise<Location[]> => {
+  const { data } = await api.get<ApiResponse<Location[]>>(
+    "/locations/popular",
+  );
+
+  return data.data;
+};
+
 const createFormData = (values: LocationFormData) => {
   const formData = new FormData();
 
