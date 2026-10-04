@@ -1,35 +1,28 @@
+export const dynamic = "force-dynamic";
+
 import { api } from "@/app/api/api";
 import { logErrorResponse } from "@/app/api/auth/_utils/utils";
+import { User } from "@/types/user";
 import { isAxiosError } from "axios";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export async function POST() {
+export async function GET() {
   try {
     const cookieStore = await cookies();
 
-    await api.post(
-      "/api/auth/logout",
-      {},
-      {
-        headers: {
-          Cookie: cookieStore.toString(),
-        },
+    const response = await api.get<User>("/api/users/current", {
+      headers: {
+        Cookie: cookieStore.toString(),
       },
-    );
+    });
 
-    cookieStore.delete("sessionId");
-    cookieStore.delete("accessToken");
-    cookieStore.delete("refreshToken");
-
-    return NextResponse.json(
-      {
-        success: true,
-        message: "Вихід успішний",
-      },
-      { status: 200 },
-    );
+    return NextResponse.json(response.data, {
+      status: response.status,
+    });
   } catch (error) {
+    console.error(error);
+
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
 
@@ -38,7 +31,9 @@ export async function POST() {
           error: error.message,
           response: error.response?.data,
         },
-        { status: error.response?.status ?? 500 },
+        {
+          status: error.response?.status ?? 500,
+        },
       );
     }
 
