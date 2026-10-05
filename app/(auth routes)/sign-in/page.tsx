@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { login } from "@/lib/api/clientApi";
-import { authStore } from "@/lib/store/authStore";
+import { useAuthStore } from "@/lib/store/authStore";
 import css from "./SignInPage.module.css";
 
 const SignInPage = () => {
@@ -21,7 +21,7 @@ const SignInPage = () => {
     try {
       const user = await login({ email, password });
 
-      authStore.getState().setUser(user);
+      useAuthStore.getState().setUser(user);
 
       router.push("/profile");
     } catch (err) {
