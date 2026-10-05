@@ -10,6 +10,7 @@ import KeyAdvantages from "../KeyAdvantages/KeyAdvantages";
 import PopularLocations from "../PopularLocations/PopularLocations";
 
 import css from "./HomePage.module.css";
+import ReviewsBlock from "../ReviewsBlock/ReviewsBlock";
 
 // Домашня сторінка збирає блоки, які роблять різні учасники команди.
 // Далі по мірі готовності додаються:
@@ -68,6 +69,7 @@ const HomePage = () => {
       </section>
       <KeyAdvantages />
       <PopularLocations />
+      <ReviewsBlock />
     </div>
   );
 };
