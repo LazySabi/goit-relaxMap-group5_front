@@ -1,4 +1,16 @@
+.section {
+  padding-block: 32px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+
 .gallery {
+  grid-row: 1;
   position: relative;
   width: 100%;
   min-width: 0;
@@ -9,4 +21,14 @@
 
 .image {
   object-fit: cover;
+}
+
+@media (min-width: 1440px) {
+  .section {
+    padding-block: 48px;
+  }
+
+  .layout {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  }
 }
