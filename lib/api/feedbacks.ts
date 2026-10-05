@@ -24,7 +24,7 @@ interface FeedbacksResponse {
 interface CreateFeedbacksData {
   locationId?: string;
   userName: string;
-  rute: number;
+  rate: number;
   description: string;
 }
 
@@ -37,6 +37,6 @@ export const fetchFeedbacks = async (
 };
 
 export const createFeedbacks = async (data: CreateFeedbacksData) => {
-  const res = await axios.post(`${API_URL}/api/feetbacks`, data);
+  const res = await axios.post(`${API_URL}/api/feedbacks`, data);
   return res.data;
 };

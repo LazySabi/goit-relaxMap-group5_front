@@ -8,9 +8,10 @@ export async function GET(request: NextRequest) {
   try {
     const page = request.nextUrl.searchParams.get("page");
     const limit = request.nextUrl.searchParams.get("limit");
+    const searchParams = request.nextUrl.searchParams;
 
     const response = await api.get<FeedbacksResponse>("/api/feedbacks", {
-      params: { page, limit },
+      params: { page, limit, locationId: searchParams.get("locationId") ?? undefined, },
     });
 
     return NextResponse.json(response.data, { status: response.status });

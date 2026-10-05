@@ -15,8 +15,6 @@ const ReviewsBlock = () => {
     queryFn: () => fetchFeedbacks(),
   });
 
-  console.log("FEEDBACKS:", data);
-
   if (isLoading) return <p>Завантаження...</p>;
   if (isError) return <p>Помилка завантаження відгуків </p>;
 

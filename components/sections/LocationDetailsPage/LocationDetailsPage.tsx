@@ -13,8 +13,8 @@ export default function LocationDetailsPage({ location }: Props) {
   return (
     <main className={css.page}>
       <div className="container">
-       <LocationInfoBlock location={location} authorName={""} />
-       <LocationDescription description={location.description} />
+        <LocationInfoBlock location={location} />
+        <LocationDescription description={location.description} />
         {/* <Reviews /> */}
       </div>
     </main>
