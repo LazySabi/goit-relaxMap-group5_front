@@ -56,12 +56,12 @@ export const getRegions = async (): Promise<Region[]> => {
 
 export const getLocationById = async (
   locationId: string,
-): Promise<LocationAuthor> => {
-  const { data } = await api.get<LocationAuthor>(
+): Promise<Location> => {
+  const { data } = await api.get<ApiResponse<Location>>(
     `/locations/${locationId}`,
   );
 
-  return data;
+  return data.data;
 };
 export type LocationAuthor = {
   id: string;
