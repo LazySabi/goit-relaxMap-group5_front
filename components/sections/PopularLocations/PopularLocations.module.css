@@ -1,0 +1,152 @@
+.section {
+  padding: 64px 0;
+  background: var(--background);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.title {
+  margin: 0;
+  max-width: 800px;
+  color: #000;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.allLocations {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 116px;
+  height: 50px;
+  padding: 0 16px;
+
+  border-radius: 8px;
+  background: var(--button-primary);
+  color: var(--text-secondary);
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+
+  transition: opacity 0.2s ease;
+}
+
+.allLocations:hover {
+  opacity: 0.9;
+}
+
+.slider {
+  width: 100%;
+  overflow: hidden;
+}
+
+.slide {
+  height: auto;
+  display: flex;
+}
+
+.slide > * {
+  width: 100%;
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 40px;
+}
+
+.arrowButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+  padding: 0;
+
+  border: 1px solid rgba(76, 38, 19, 0.15);
+  border-radius: 8px;
+
+  background: transparent;
+  color: var(--text-third);
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.arrowButton svg {
+  width: 24px;
+  height: 24px;
+}
+
+.arrowButton:hover {
+  background: var(--button-primary);
+  color: var(--text-secondary);
+}
+
+.message {
+  margin: 0;
+  color: var(--text-third);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+@media screen and (min-width: 768px) {
+  .section {
+    padding: 64px 0;
+  }
+
+  .header {
+    margin-bottom: 32px;
+  }
+
+  .title {
+    font-size: 44px;
+  }
+
+  .allLocations {
+    min-width: 116px;
+    height: 50px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .section {
+    padding: 72px 0;
+  }
+
+  .header {
+    margin-bottom: 32px;
+  }
+
+  .title {
+    font-size: 52px;
+  }
+
+  .allLocations {
+    min-width: 138px;
+    height: 50px;
+    padding: 0 16px;
+    font-size: 20px;
+    line-height: 30px;
+  }
+}

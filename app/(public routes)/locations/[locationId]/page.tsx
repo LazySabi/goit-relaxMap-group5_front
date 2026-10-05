@@ -29,7 +29,7 @@ export default async function LocationPage({ params }: Props) {
 
   try {
     const response = await api.get<LocationResponse>(
-      `/api/locations/${locationId}`
+      `/api/locations/${locationId}`,
     );
 
     location = response.data;

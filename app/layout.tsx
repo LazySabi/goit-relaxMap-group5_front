@@ -9,7 +9,7 @@ import TanStackQueryProvider from "@/components/providers/TanStackQueryProvider/
 import AuthProvider from "@/components/providers/AuthProvider/AuthProvider";
 
 const montserrat = Montserrat({
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
   weight: ["400", "700"],
   variable: "--font-montserrat",
   display: "swap",
@@ -28,7 +28,7 @@ export default function RootLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={montserrat.variable}>
+    <html lang="uk" className={montserrat.variable}>
       <body>
         <TanStackQueryProvider>
           <AuthProvider>
@@ -41,4 +41,4 @@ export default function RootLayout({
       </body>
     </html>
   );
-} 
+}
