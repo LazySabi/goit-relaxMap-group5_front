@@ -15,6 +15,8 @@ const ReviewsBlock = () => {
     queryFn: () => fetchFeedbacks(),
   });
 
+  console.log("FEEDBACKS:", data);
+
   if (isLoading) return <p>Завантаження...</p>;
   if (isError) return <p>Помилка завантаження відгуків </p>;
 
@@ -35,7 +37,7 @@ const ReviewsBlock = () => {
             1440: { slidesPerView: 3 },
           }}
         >
-          {data?.data.feedbacks.map((review) => (
+          {data?.feedbacks.map((review) => (
             <SwiperSlide key={review._id}>
               <ReviewCard review={review} />
             </SwiperSlide>

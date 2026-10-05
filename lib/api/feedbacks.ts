@@ -3,15 +3,22 @@ import type { Review } from "@/components/sections/ReviewsBlock/ReviewsCard";
 
 const API_URL = process.env.NEXT_PUBLIC_SITE_URL;
 
+// interface FeedbacksResponse {
+//   status: number;
+//   message: string;
+//   data: {
+//     feedbacks: Review[];
+//     total: number;
+//     page: number;
+//     totalPages: number;
+//   };
+// }
 interface FeedbacksResponse {
-  status: number;
-  message: string;
-  data: {
-    feedbacks: Review[];
-    total: number;
-    page: number;
-    totalPages: number;
-  };
+  feedbacks: Review[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
 }
 
 interface CreateFeedbacksData {
