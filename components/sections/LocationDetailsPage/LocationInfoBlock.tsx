@@ -1,49 +1,59 @@
-import Link from 'next/link';
-import styles from './LocationInfoBlock.module.css';
+import Image from "next/image";
+import Link from "next/link";
+import type { Location } from "@/lib/api/locationsApi";
+import css from "./LocationInfoBlock.module.css";
 
 type LocationInfoBlockProps = {
-  name: string;
-  region: string;
-  locationType: string;
-  author: {
-    id: string;
-    name: string;
-  };
+  location: Location;
+  authorName: string;
 };
 
 export default function LocationInfoBlock({
-  name,
-  region,
-  locationType,
-  author,
+  location,
 }: LocationInfoBlockProps) {
   return (
-    <div className={styles.info}>
-      <h1 className={styles.title}>{name}</h1>
+    <section className={css.section}>
+      <div className={css.layout}>
+        <div className={css.content}>
 
-      <dl className={styles.details}>
-        <div className={styles.row}>
-          <dt className={styles.label}>Регіон</dt>
-          <dd className={styles.value}>{region}</dd>
-        </div>
+        {/* треба буде замінити цей блок на імпортований блок з рейтингом */}
+        <div className={css.rating}>
+            <span aria-hidden="true">★★★★★</span>
+            <span>{location.rate}</span>
+          </div>
 
-        <div className={styles.row}>
-          <dt className={styles.label}>Тип локації</dt>
-          <dd className={styles.value}>{locationType}</dd>
-        </div>
+          <h1 className={css.title}>{location.name}</h1>
 
-        <div className={styles.row}>
-          <dt className={styles.label}>Автор</dt>
-          <dd className={styles.value}>
-            <Link
-              href={`/profile/${encodeURIComponent(author.id)}`}
-              className={styles.authorLink}
-            >
-              {author.name}
-            </Link>
-          </dd>
+          <p className={css.text}>
+            <span>Регіон:</span> {location.region}
+          </p>
+
+          <p className={css.text}>
+            <span>Тип локації:</span> {location.locationType}
+          </p>
+
+        <p className={css.text}>
+          <span>Автор статті:</span>{" "}
+          <Link
+            href={`/profile/${location.ownerId}`}
+            className={css.authorLink}
+          >
+            {/* Автор статті буде додано після появи потрібного API-маршруту */}
+          </Link>
+        </p>
+      </div>
+
+       <div className={css.gallery}>
+          <Image
+            src={location.image}
+            alt={location.name}
+            fill
+            priority
+            className={css.image}
+            sizes="(min-width: 1440px) 60vw, 100vw"
+          />
         </div>
-      </dl>
-    </div>
+      </div>
+    </section>
   );
 }
