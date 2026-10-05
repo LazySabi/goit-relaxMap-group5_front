@@ -2,25 +2,25 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Location } from "@/lib/api/locationsApi";
 import css from "./LocationInfoBlock.module.css";
+import StarRating from "@/components/sections/ReviewsBlock/StarRating";
 
 type LocationInfoBlockProps = {
   location: Location;
-  authorName: string;
 };
 
 export default function LocationInfoBlock({
   location,
 }: LocationInfoBlockProps) {
+  const author = location.author;
+
   return (
     <section className={css.section}>
       <div className={css.layout}>
         <div className={css.content}>
-
-        {/* треба буде замінити цей блок на імпортований блок з рейтингом */}
         <div className={css.rating}>
-            <span aria-hidden="true">★★★★★</span>
-            <span>{location.rate}</span>
-          </div>
+  <StarRating rate={location.rate} />
+  <span className={css.rateValue}>·{location.rate.toFixed(1)}</span>
+</div>
 
           <h1 className={css.title}>{location.name}</h1>
 
@@ -32,18 +32,15 @@ export default function LocationInfoBlock({
             <span>Тип локації:</span> {location.locationType}
           </p>
 
-        <p className={css.text}>
-          <span>Автор статті:</span>{" "}
-          <Link
-            href={`/profile/${location.ownerId}`}
-            className={css.authorLink}
-          >
-            {/* Автор статті буде додано після появи потрібного API-маршруту */}
-          </Link>
-        </p>
-      </div>
+          <p className={css.text}>
+  <span>Автор статті:</span>{" "}
+  <Link href={`/profile/${location.author?.id}`} className={css.authorLink}>
+    {author?.name}
+  </Link>
+</p>
+        </div>
 
-       <div className={css.gallery}>
+        <div className={css.gallery}>
           <Image
             src={location.image}
             alt={location.name}

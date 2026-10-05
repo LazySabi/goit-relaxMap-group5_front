@@ -24,6 +24,7 @@ export type Location = {
   rate: number;
   description: string;
   ownerId: string;
+  author?: LocationAuthor | null;
 };
 
 export type LocationFormData = {
