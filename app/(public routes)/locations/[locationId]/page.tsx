@@ -7,6 +7,7 @@ const testLocation = {
     'Це тестовий опис локації для перевірки відображення сторінки.',
   region: 'Київська область',
   locationType: 'Парк',
+  rate: 0,
   author: {
     id: 'test-author',
     name: 'Тестовий автор',
