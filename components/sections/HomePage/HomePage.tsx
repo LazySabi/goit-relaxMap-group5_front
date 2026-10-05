@@ -1,6 +1,7 @@
 import KeyAdvantages from "../KeyAdvantages/KeyAdvantages";
 import PopularLocations from "../PopularLocations/PopularLocations";
 import css from "./HomePage.module.css";
+import ReviewsBlock from "../ReviewsBlock/ReviewsBlock";
 
 // Домашня сторінка збирає блоки, які роблять різні учасники команди.
 // Далі по мірі готовності додаються:
@@ -15,6 +16,7 @@ const HomePage = () => {
     <div className={css.homePage}>
       <KeyAdvantages />
       <PopularLocations />
+      <ReviewsBlock />
     </div>
   );
 };
