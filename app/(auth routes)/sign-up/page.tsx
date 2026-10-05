@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { register } from "@/lib/api/clientApi";
-import { authStore } from "@/lib/store/authStore";
+import { useAuthStore } from "@/lib/store/authStore";
 import css from "./SignUpPage.module.css";
 
 const SignUpPage = () => {
@@ -21,7 +21,7 @@ const SignUpPage = () => {
     try {
       const user = await register({ email, password });
 
-      authStore.getState().setUser(user);
+      useAuthStore.getState().setUser(user);
 
       router.push("/profile");
     } catch (err) {
