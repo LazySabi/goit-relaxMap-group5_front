@@ -1,6 +1,7 @@
 import LocationDetailsPage from '../../../../components/sections/LocationDetailsPage/LocationDetailsPage';
 
 const testLocation = {
+  _id: 'test-location',
   name: 'Тестова локація',
   image: '/location-test.png',
   description:
@@ -8,6 +9,7 @@ const testLocation = {
   region: 'Київська область',
   locationType: 'Парк',
   rate: 0,
+  ownerId: 'test-author',
   author: {
     id: 'test-author',
     name: 'Тестовий автор',
