@@ -4,6 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -13,14 +17,16 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/LazySabi/goit-relaxMap-group5_front/issues"
   },
   "homepage": "https://github.com/LazySabi/goit-relaxMap-group5_front#readme",
   "dependencies": {
     "@tanstack/react-query": "^5.104.0",
+    "@tanstack/react-query-devtools": "^5.104.0",
     "axios": "^1.20.0",
+    "cookie": "^2.0.1",
     "formik": "^2.4.9",
     "modern-normalize": "^3.0.1",
     "next": "^16.3.6",
@@ -33,9 +39,11 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "babel-plugin-react-compiler": "^1.0.0",
     "@types/node": "^26.6.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.3.6",
     "typescript": "^6.0.3"
