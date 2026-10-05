@@ -1,0 +1,5 @@
+.rating-stars {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  gap: 0px;
+}
