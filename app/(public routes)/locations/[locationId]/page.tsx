@@ -1,21 +1,53 @@
-import LocationDetailsPage from '../../../../components/sections/LocationDetailsPage/LocationDetailsPage';
+import LocationDetailsPage from "../../../../components/sections/LocationDetailsPage/LocationDetailsPage";
+import { api } from "@/app/api/api";
+import { isAxiosError } from "axios";
+import { notFound } from "next/navigation";
 
-const testLocation = {
-  _id: 'test-location',
-  name: 'Тестова локація',
-  image: '/location-test.png',
-  description:
-    'Це тестовий опис локації для перевірки відображення сторінки.',
-  region: 'Київська область',
-  locationType: 'Парк',
-  rate: 0,
-  ownerId: 'test-author',
-  author: {
-    id: 'test-author',
-    name: 'Тестовий автор',
-  },
+type Props = {
+  params: Promise<{ locationId: string }>;
 };
 
-export default function LocationPage() {
-  return <LocationDetailsPage location={testLocation} />;
+type LocationResponse = {
+  _id: string;
+  name: string;
+  image: string;
+  rate: number;
+  description: string;
+  region: string;
+  locationType: string;
+  ownerId: string;
+  author: {
+    id: string;
+    name: string;
+  } | null;
+};
+
+export default async function LocationPage({ params }: Props) {
+  const { locationId } = await params;
+
+  let location: LocationResponse;
+
+  try {
+    const response = await api.get<LocationResponse>(
+      `/api/locations/${locationId}`,
+    );
+
+    location = response.data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response?.status === 404) {
+      notFound();
+    }
+
+    throw error;
+  }
+
+  const locationAuthorPage = {
+    ...location,
+    author: location.author ?? {
+      id: location.ownerId,
+      name: "Автор невідомий",
+    },
+  };
+
+  return <LocationDetailsPage location={locationAuthorPage} />;
 }
