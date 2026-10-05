@@ -11,6 +11,7 @@ type LocationResponse = {
   _id: string;
   name: string;
   image: string;
+  rate: number;
   description: string;
   region: string;
   locationType: string;
@@ -40,7 +41,7 @@ export default async function LocationPage({ params }: Props) {
     throw error;
   }
 
-  const locationForPage = {
+  const locationAuthorPage = {
     ...location,
     author: location.author ?? {
       id: location.ownerId,
@@ -48,5 +49,5 @@ export default async function LocationPage({ params }: Props) {
     },
   };
 
-  return <LocationDetailsPage location={locationForPage} />;
+  return <LocationDetailsPage location={locationAuthorPage} />;
 }
