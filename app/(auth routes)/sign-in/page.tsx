@@ -8,6 +8,8 @@ import { FiMap } from "react-icons/fi";
 
 import { signInValidationSchema } from "@/lib/api/validation/authValidation";
 
+import { login } from "@/lib/api/clientApi";
+import { useAuthStore } from "@/lib/store/authStore";
 import css from "./SignInPage.module.css";
 
 interface SignInValues {
@@ -46,6 +48,7 @@ const SignIn = () => {
       */
 
       console.log("Sign in values:", values);
+      useAuthStore.getState().setUser(user);
 
       await new Promise((resolve) => {
         setTimeout(resolve, 700);

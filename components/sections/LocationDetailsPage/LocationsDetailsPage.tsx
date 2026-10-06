@@ -1,1 +1,0 @@
-import css from "./LocationsDetailsPage.module.css";

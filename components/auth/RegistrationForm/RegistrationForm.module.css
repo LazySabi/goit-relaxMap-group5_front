@@ -1,0 +1,125 @@
+.title {
+    font-size: 28px;
+    text-align: center;
+    color: #000;
+    margin-bottom: 32px;
+}
+
+.label {
+    font-size: 16px;
+}
+
+.form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.field {
+    position: relative;
+}
+
+.inputForm {
+    width: 335px;
+    margin-top: 8px;
+}
+
+.inputForm input:focus::placeholder {
+    color: transparent;
+    transition: color var(--transition);
+}
+
+.error {
+    color: #dc3545;
+    font-size: 12px;
+    margin: 0;
+    bottom: -20px;
+
+    position: absolute;
+    left: 0;
+
+}
+
+.submitButton {
+    width: 335px;
+    font-size: 16px;
+    padding: 10px 0;
+}
+
+
+
+@media screen and (min-width: 768px) {
+    .title {
+        font-size: 44px;
+        text-align: center;
+        color: #000;
+        margin-bottom: 32px;
+    }
+
+    .form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .inputForm {
+        width: 644px;
+        margin-top: 8px;
+    }
+
+    .error {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 4px;
+    }
+
+    .submitButton {
+        width: 644px;
+    }
+
+}
+
+@media screen and (min-width: 1440px) {
+    .title {
+        font-size: 52px;
+        text-align: center;
+        color: #000;
+        margin-bottom: 32px;
+    }
+
+    .label {
+        font-size: 16px;
+    }
+
+    .form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .inputForm {
+        width: 644px;
+        margin-top: 8px;
+    }
+
+    .error {
+        font-size: 12px;
+        margin-top: 4px;
+    }
+
+    .submitButton {
+        font-size: 20px;
+        padding: 7px 0;
+    }
+}
+
+
+
+
+

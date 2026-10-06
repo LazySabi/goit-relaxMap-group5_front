@@ -2,3 +2,168 @@
   display: flex;
   flex-direction: column;
 }
+
+.hero {
+  padding: 172px 0;
+  background: url("/img/hero-section/hero-bg-mob.jpg");
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.container {
+  width: 100%;
+  height: 363px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+}
+
+.heroTitle {
+  max-width: 335px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.15;
+  color: #fff;
+  margin: 0 0 24px;
+}
+
+.heroDescription {
+  max-width: 335px;
+  margin: 0 0 32px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #fff;
+}
+
+.searchForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 335px;
+  height: 95px;
+}
+
+.searchInput {
+  appearance: none;
+  width: 335px;
+  height: 40px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  padding: 8px;
+  background: #ffe5d9;
+}
+
+.searchInput::placeholder {
+  color: rgba(0, 0, 0, 0.6);
+  border: none;
+}
+.searchInput::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.searchButton {
+  width: 335px;
+  height: 39px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 4px;
+  background: #cc6534;
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.searchButton:hover {
+  background: #ffe5d9;
+  border: 1px solid #cc6534;
+  color: #4c2613;
+}
+
+.searchInput:focus-visible,
+.searchButton:focus-visible {
+  outline: none;
+  border: 1px solid #cc6534;
+  color: #4c2613;
+}
+
+@media screen and (min-width: 768px) {
+  .hero {
+    padding: 214px 0;
+    background: url("/img/hero-section/hero-bg-tab.jpg");
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+  }
+  .container {
+    max-width: 768px;
+    padding: 0 32px;
+  }
+  .heroContent {
+    align-items: flex-start;
+  }
+  .heroTitle {
+    max-width: 704px;
+    font-size: 48px;
+  }
+  .heroDescription {
+    max-width: 704px;
+    text-align: left;
+  }
+  .searchForm {
+    flex-direction: row;
+    width: 484px;
+    gap: 16px;
+  }
+  .searchInput {
+    font-size: 16px;
+    width: 331px;
+  }
+  .searchButton {
+    width: 137px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .hero {
+    padding: 235px 0;
+    background: url("/img/hero-section/hero-bg-desk.jpg");
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+  }
+  .container {
+    max-width: 1440px;
+    padding: 0 64px;
+  }
+  .heroTitle {
+    max-width: 1312px;
+
+    font-size: 56px;
+  }
+  .heroDescription {
+    text-align: left;
+  }
+  .searchForm {
+    flex-direction: row;
+    width: 512px;
+    gap: 16px;
+  }
+
+  .searchButton {
+    width: 165px;
+  }
+}
