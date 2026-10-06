@@ -6,16 +6,26 @@ export interface Review {
   rate: number;
   description: string;
   userName: string;
-  locationType?: string;
+  locationId?: {
+    _id: string;
+    name: string;
+  };
 }
 
 const ReviewCard = ({ review }: { review: Review }) => {
   return (
     <div className={css.card}>
       <StarRating rate={review.rate} />
+
       <p className={css.text}>{review.description}</p>
-      <p className={css.author}>{review.userName}</p>
-      {review.locationType && <p className={css.type}>{review.locationType}</p>}
+
+      <div className={css.authorInfo}>
+        <p className={css.author}>{review.userName}</p>
+
+        {review.locationId?.name && (
+          <p className={css.type}>{review.locationId.name}</p>
+        )}
+      </div>
     </div>
   );
 };
