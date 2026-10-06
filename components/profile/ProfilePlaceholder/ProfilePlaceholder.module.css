@@ -1,39 +1,78 @@
 .placeholder {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 32px;
 
   width: 100%;
   padding: 20px;
   border-radius: 24px;
 
-  background-color: var(--color-scheme-2-foreground);
+  background-color: var(--foreground);
 }
 
 .text {
+  margin: 0;
   font-weight: 700;
   font-size: 18px;
-  line-height: 1.4;
+  line-height: 25px;
   letter-spacing: -0.01em;
   text-align: left;
-  color: var(--color-scheme-2-text);
+  color: #000;
 }
 
 .actionLink {
-  width: 100%;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0;
+  border: 1px solid var(--button-primary);
+  border-radius: 6px;
+  background-color: var(--button-primary);
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.actionLink:hover,
+.actionLink:focus-visible {
+  background-color: var(--foreground);
+  color: var(--text-third);
+}
+
+.actionLink:active {
+  background-color: var(--button-primary);
+  color: var(--text-secondary);
 }
 
 @media screen and (min-width: 768px) {
   .placeholder {
+    align-self: flex-start;
+    align-items: flex-start;
     max-width: 533px;
     padding: 40px 32px;
+  }
+
+  .actionLink {
+    width: 204px;
   }
 }
 
 @media screen and (min-width: 1440px) {
   .text {
     font-size: 26px;
+    line-height: 36px;
+  }
+
+  .actionLink {
+    width: 249px;
+    font-size: 20px;
   }
 }

@@ -86,3 +86,26 @@ export async function fetchLocationById(id: string): Promise<Location> {
 
   return data;
 }
+
+export interface UserLocationsResponse {
+  locations: Location[];
+  total: number;
+  isEmpty: boolean;
+}
+
+export const updateMe = async (formData: FormData): Promise<User> => {
+  const { data } = await api.patch<User>("/users/current", formData);
+  return data;
+};
+
+export const fetchUserLocations = async (
+  userId: string,
+  page: number,
+  limit: number,
+): Promise<UserLocationsResponse> => {
+  const { data } = await api.get<UserLocationsResponse>(
+    `/users/${userId}/locations`,
+    { params: { page, limit } },
+  );
+  return data;
+};
