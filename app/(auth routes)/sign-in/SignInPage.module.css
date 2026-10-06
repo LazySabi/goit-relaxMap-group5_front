@@ -1,68 +1,81 @@
-.mainContent {
-  flex: 1;
+.page {
+  min-height: 100vh;
+  background-color: #fff2ed;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 24px;
-  background-color: #fff;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+.authSection {
+  min-height: 100vh;
+  padding: 28px 16px 80px;
 }
 
-.formTitle {
-  font-size: 24px;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 8px;
-  color: #212529;
-}
-
-.formGroup {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  font-weight: 500;
-  color: #212529;
-}
-
-.input {
-  margin-top: 4px;
-  padding: 8px 12px;
-  font-size: 14px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-}
-
-.actions {
-  display: flex;
-  justify-content: flex-end;
+.logo {
+  display: inline-flex;
+  align-items: center;
   gap: 8px;
-}
-
-.submitButton {
-  padding: 8px 16px;
-  font-size: 16px;
-  background-color: #0d6efd;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
+  color: #2b2725;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: opacity 200ms ease;
 }
 
-.submitButton:hover {
-  background-color: #0b5ed7;
+.logo:hover {
+  opacity: 0.7;
 }
 
-.error {
-  color: #dc3545;
-  font-size: 12px;
-  margin-top: 4px;
+.logoIcon {
+  flex-shrink: 0;
+  stroke-width: 1.8;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 646px;
+  margin: 100px auto 0;
+}
+
+.authNav {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-bottom: 1px solid #beb4b0;
+}
+
+.navLink {
+  position: relative;
+  padding: 0 6px 14px;
+  color: #2b2725;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
   text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 200ms ease;
+}
+
+.navLink:hover {
+  opacity: 0.65;
+}
+
+.activeLink {
+  font-weight: 500;
+}
+
+.activeLink::after {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  background-color: #2b2725;
+  content: "";
+}
+
+.title {
+  margin: 38px 0;
+  color: #000000;
+  font-size: 44px;
+  font-weight: 500;
 }
