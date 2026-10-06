@@ -1,6 +1,7 @@
 .section {
   padding: 64px 20px;
 }
+
 .title {
   font-family: var(--font-family);
   font-weight: 700;
@@ -10,6 +11,7 @@
   margin: 0;
   color: var(--color-scheme-2-text);
 }
+
 .header {
   display: flex;
   flex-wrap: wrap;
@@ -23,15 +25,22 @@
   margin: 0 0 24px;
   color: var(--text-primary);
 }
+
 .swiperWrapper {
   position: relative;
+}
+
+.slide {
+  height: auto;
 }
 
 .controls {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  margin-top: 24px;
 }
+
 .prev,
 .next {
   width: 48px;
@@ -57,10 +66,12 @@
   .section {
     padding: 64px 32px;
   }
+
   .title {
     font-size: 44px;
   }
 }
+
 @media (min-width: 1440px) {
   .section {
     padding: 64px 72px;

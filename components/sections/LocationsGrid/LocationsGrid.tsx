@@ -65,7 +65,9 @@ export default function LocationsGrid() {
     queryFn: ({ pageParam }) => getLocations({ ...query, page: pageParam }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) =>
-      lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined,
+      lastPage.hasNextPage || lastPage.page < lastPage.totalPages
+        ? lastPage.page + 1
+        : undefined,
   });
 
   const allLocations = data?.pages.flatMap((page) => page.data ?? []) ?? [];
@@ -97,14 +99,13 @@ export default function LocationsGrid() {
     );
   }
 
-  // Помилка запиту більше не маскується під "Нічого не знайдено"
   if (isError && locations.length === 0) {
     console.error('Помилка завантаження локацій:', error);
 
     return (
       <div className={css.empty}>
         <p className={css.emptyTitle}>Не вдалося завантажити локації</p>
-        <p>Перевірте з'єднання та спробуйте ще раз.</p>
+        <p>Перевірте з&apos;єднання та спробуйте ще раз.</p>
         <button type="button" className={css.moreBtn} onClick={() => refetch()}>
           Спробувати знову
         </button>

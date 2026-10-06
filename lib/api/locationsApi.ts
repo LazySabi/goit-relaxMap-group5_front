@@ -151,13 +151,15 @@ export const getLocations = async (
 
   const items = Array.isArray(data.data) ? data.data : [];
   const p = data.pagination;
+  const limit = p?.limit ?? params.limit ?? items.length;
+  const page = p?.page ?? params.page ?? 1;
 
   return {
     data: items,
-    page: p?.page ?? params.page ?? 1,
-    limit: p?.limit ?? params.limit ?? items.length,
+    page,
+    limit,
     totalItems: p?.totalItems ?? items.length,
-    totalPages: p?.totalPages ?? 1,
-    hasNextPage: p?.hasNextPage ?? false,
+    totalPages: p?.totalPages ?? page,
+    hasNextPage: p?.hasNextPage ?? items.length >= limit,
   };
 };
