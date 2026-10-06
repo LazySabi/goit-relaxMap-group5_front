@@ -1,0 +1,49 @@
+.nav {
+  width: 100%;
+  max-width: 335px;
+  margin: 0 auto 32px auto;
+}
+
+@media (min-width: 768px) {
+  .nav {
+    max-width: 644px;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+}
+
+.item {
+  flex: 1;
+  text-align: center;
+}
+
+.link {
+  display: block;
+  padding: 12px 0;
+  line-height: 1.5;
+  color: #000;
+  border-bottom: 1px solid transparent;
+  transition:
+    opacity 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.link:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.link.active {
+  opacity: 1;
+  border-bottom-color: rgba(0, 0, 0, 0.15);
+}
+
+@media (min-width: 1440px) {
+  .link {
+    font-size: 18px;
+  }
+}
