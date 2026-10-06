@@ -41,4 +41,9 @@
   .layout {
     grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
+
+  .gallery {
+    grid-column: 2;
+    aspect-ratio: 3 / 2;
+  }
 }

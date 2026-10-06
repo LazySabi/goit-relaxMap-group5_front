@@ -23,15 +23,12 @@ export default function LocationInfoBlock({
 </div>
 
           <h1 className={css.title}>{location.name}</h1>
-
           <p className={css.text}>
             <span>Регіон:</span> {location.region}
-          </p>
-
+            </p>
           <p className={css.text}>
             <span>Тип локації:</span> {location.locationType}
           </p>
-
           <p className={css.text}>
   <span>Автор статті:</span>{" "}
   <Link href={`/profile/${location.author?.id}`} className={css.authorLink}>

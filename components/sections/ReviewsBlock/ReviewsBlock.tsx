@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import css from "./ReviewsBlock.module.css";
 import ReviewCard from "./ReviewsCard";
 import { useQuery } from "@tanstack/react-query";
@@ -9,18 +10,36 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 
-const ReviewsBlock = () => {
+interface ReviewsBlockProps {
+  locationId?: string;
+  title?: string;
+  action?: ReactNode;
+}
+
+const ReviewsBlock = ({
+  locationId,
+  title = "Останні відгуки",
+  action,
+}: ReviewsBlockProps) => {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["feedbacks"],
-    queryFn: () => fetchFeedbacks(),
+    queryKey: ["feedbacks", locationId ?? "all"],
+    queryFn: () => fetchFeedbacks(locationId),
   });
 
   if (isLoading) return <p>Завантаження...</p>;
-  if (isError) return <p>Помилка завантаження відгуків </p>;
+  if (isError) return <p>Помилка завантаження відгуків</p>;
 
-  return (
+ return (
     <section className={css.section}>
-      <h2 className={css.title}>Останні відгуки</h2>
+      <div className={css.header}>
+        <h2 className={css.title}>{title}</h2>
+        {action}
+      </div>
+
+      {data?.feedbacks.length === 0 && (
+        <p className={css.empty}>Відгуків поки немає. Будьте першим!</p>
+      )}
+
       <div className={css.swiperWrapper}>
         <Swiper
           modules={[Navigation]}
