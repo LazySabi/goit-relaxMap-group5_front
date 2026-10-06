@@ -16,7 +16,7 @@ type BackendLocationsResponse = {
   };
 };
 
-export type LocationsListResponse = {
+export type LocationsResponse = {
   data: Location[];
   page: number;
   limit: number;
@@ -73,7 +73,7 @@ export async function GET(req: NextRequest) {
       },
     );
 
-    const result: LocationsListResponse = {
+    const result: LocationsResponse = {
       data: response.data.data,
       page: response.data.pagination.page,
       limit: response.data.pagination.limit,
@@ -122,15 +122,11 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const cookieStore = await cookies();
 
-    const response = await api.post(
-      "/api/locations",
-      formData,
-      {
-        headers: {
-          Cookie: cookieStore.toString(),
-        },
+    const response = await api.post("/api/locations", formData, {
+      headers: {
+        Cookie: cookieStore.toString(),
       },
-    );
+    });
 
     return NextResponse.json(response.data, {
       status: response.status,
