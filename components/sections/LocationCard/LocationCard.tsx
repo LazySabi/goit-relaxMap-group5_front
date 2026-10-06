@@ -29,7 +29,7 @@ export default function LocationCard({ location, typeName }: Props) {
 
         <h3 className={css.name}>{location.name}</h3>
 
-        <Link href={`/locations/${location._id}`} className={css.btn}>
+        <Link href={`/locations/${location._id}`} className={css.btn} prefetch={false}>
           Переглянути локацію
         </Link>
       </div>
