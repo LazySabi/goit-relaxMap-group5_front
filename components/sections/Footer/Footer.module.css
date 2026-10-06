@@ -72,9 +72,19 @@
   }
 
   .top {
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    justify-items: start;
     text-align: left;
+  }
+
+  .socialList {
+    justify-self: center;
+  }
+
+  .nav {
+    justify-self: end;
   }
 
   .navList {
