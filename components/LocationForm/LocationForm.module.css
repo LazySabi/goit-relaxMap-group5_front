@@ -1,0 +1,296 @@
+/* =========================
+   MOBILE FIRST — 320px+
+   ========================= */
+
+.wrapper {
+  width: 100%;
+  padding: 32px 16px 40px;
+
+  background-color: #fff4ed;
+}
+
+.title {
+  margin: 0 0 24px;
+
+  color: #173f22;
+
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.form {
+  width: 100%;
+}
+
+/* =========================
+   FORM FIELDS
+   ========================= */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  margin-top: 16px;
+}
+
+.label {
+  color: #4a3024;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  box-sizing: border-box;
+
+  border: 1px solid #e4c9bb;
+  border-radius: 6px;
+
+  background-color: #ffe3d5;
+  color: #4a3024;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    background-color 200ms ease;
+}
+
+.input,
+.select {
+  height: 40px;
+  padding: 0 12px;
+}
+
+.select {
+  cursor: pointer;
+}
+
+.textarea {
+  min-height: 160px;
+  padding: 12px;
+
+  resize: vertical;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: #8d817b;
+}
+
+/* HOVER */
+
+.input:hover,
+.select:hover,
+.textarea:hover {
+  border-color: #d8662c;
+}
+
+/* FOCUS */
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: #d8662c;
+  box-shadow: 0 0 0 1px #d8662c;
+}
+
+/* DISABLED SELECT */
+
+.select:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* =========================
+   VALIDATION ERROR
+   ========================= */
+
+.error {
+  margin: 4px 0 0;
+
+  color: #c62828;
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+
+.actions {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 12px;
+
+  margin-top: 24px;
+}
+
+.publishButton,
+.cancelButton {
+  width: 100%;
+  min-height: 44px;
+
+  padding: 10px 24px;
+
+  border-radius: 6px;
+
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+
+  cursor: pointer;
+
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease,
+    opacity 200ms ease;
+}
+
+/* PRIMARY BUTTON */
+
+.publishButton {
+  border: 1px solid #d8662c;
+
+  background-color: #d8662c;
+  color: #ffffff;
+}
+
+.publishButton:hover:not(:disabled),
+.publishButton:focus-visible:not(:disabled) {
+  border-color: #b94f1d;
+  background-color: #b94f1d;
+}
+
+.publishButton:active:not(:disabled) {
+  border-color: #173f22;
+  background-color: #173f22;
+}
+
+/* SECONDARY BUTTON */
+
+.cancelButton {
+  border: 1px solid #e1d3ca;
+
+  background-color: #f7eee9;
+  color: #4a3024;
+}
+
+.cancelButton:hover:not(:disabled),
+.cancelButton:focus-visible:not(:disabled) {
+  border-color: #d8662c;
+  background-color: #fff4ed;
+}
+
+.cancelButton:active:not(:disabled) {
+  border-color: #173f22;
+  color: #173f22;
+}
+
+/* KEYBOARD FOCUS */
+
+.publishButton:focus-visible,
+.cancelButton:focus-visible {
+  outline: 2px solid #d8662c;
+  outline-offset: 2px;
+}
+
+/* DISABLED BUTTONS */
+
+.publishButton:disabled,
+.cancelButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* =========================
+   TABLET — 768px+
+   ========================= */
+
+@media screen and (min-width: 768px) {
+  .wrapper {
+    padding: 40px 32px 56px;
+  }
+
+  .title {
+    margin-bottom: 32px;
+
+    font-size: 40px;
+    line-height: 1.2;
+  }
+
+  .input,
+  .select {
+    height: 44px;
+  }
+
+  .textarea {
+    min-height: 180px;
+  }
+
+  .actions {
+    flex-direction: row;
+    gap: 16px;
+
+    margin-top: 32px;
+  }
+
+  .publishButton,
+  .cancelButton {
+    width: 160px;
+  }
+}
+
+/* =========================
+   DESKTOP — 1440px+
+   ========================= */
+
+@media screen and (min-width: 1440px) {
+  .wrapper {
+    width: 1048px;
+
+    margin: 0 auto;
+    padding: 48px 0 64px;
+  }
+
+  .title {
+    margin-bottom: 32px;
+
+    font-size: 40px;
+    line-height: 1.2;
+  }
+
+  .input,
+  .select {
+    height: 44px;
+  }
+
+  .textarea {
+    min-height: 180px;
+  }
+
+  .actions {
+    gap: 16px;
+
+    margin-top: 32px;
+  }
+
+  .publishButton,
+  .cancelButton {
+    width: 168px;
+    min-height: 48px;
+  }
+}

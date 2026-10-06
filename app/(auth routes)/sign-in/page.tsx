@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import toast from "react-hot-toast";
 import { FiMap } from "react-icons/fi";
 
 import { signInValidationSchema } from "@/lib/api/validation/authValidation";
+
 import css from "./SignInPage.module.css";
 
 interface SignInValues {
@@ -24,21 +25,33 @@ const SignIn = () => {
 
   const handleSubmit = async (
     values: SignInValues,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
+    {
+      setSubmitting,
+    }: {
+      setSubmitting: (isSubmitting: boolean) => void;
+    },
   ) => {
     try {
-      console.log("Sign in values:", values);
-
       /*
-        Тут згодом буде запит до backend, наприклад:
+        Це тимчасова перевірка, доки backend-команда не надасть:
+        - точний endpoint для входу;
+        - формат request body;
+        - формат response;
+        - адресу профілю після авторизації.
+
+        Тут згодом буде приблизно так:
 
         const { data } = await axiosClient.post("/auth/login", values);
-
-        Після того як backend підтвердить endpoint і response:
         router.push(`/profile/${data.user._id}`);
       */
 
-      toast.success("Форма успішно пройшла валідацію");
+      console.log("Sign in values:", values);
+
+      await new Promise((resolve) => {
+        setTimeout(resolve, 700);
+      });
+
+      toast.success("Вхід успішно виконано");
       router.push("/");
     } catch {
       toast.error("Не вдалося виконати вхід. Спробуйте ще раз.");
@@ -77,7 +90,7 @@ const SignIn = () => {
             validationSchema={signInValidationSchema}
             onSubmit={handleSubmit}
           >
-            {({ errors, touched, isSubmitting }) => (
+            {({ errors, isSubmitting, touched }) => (
               <Form className={css.form} noValidate>
                 <div className={css.field}>
                   <label className={css.label} htmlFor="email">
