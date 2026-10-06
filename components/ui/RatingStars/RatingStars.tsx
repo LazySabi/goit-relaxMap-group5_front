@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import "../common.module.css";
 import css from "./RatingStars.module.css";
 import Icon from "../Icon/Icon";
 
@@ -12,7 +11,10 @@ interface RatingStarsProps {
   className?: string;
 }
 
-export default function RatingStars({ value, className }: RatingStarsProps): React.ReactNode {
+export default function RatingStars({
+  value,
+  className,
+}: RatingStarsProps): React.ReactNode {
   const stars = new Array(5)
     .fill(Math.max(0, Math.min(5, value)))
     .map((v, idx) => {
