@@ -32,7 +32,6 @@ export default function RootLayout({
   return (
     <html lang="uk" className={montserrat.variable}>
       <body>
-        <Toaster position="top-center" />
         <TanStackQueryProvider>
           <AuthProvider>
             <Header />
@@ -40,6 +39,7 @@ export default function RootLayout({
             {modal}
             <Footer />
             <EditProfileModal />
+
             <Toaster position="top-right" />
           </AuthProvider>
         </TanStackQueryProvider>

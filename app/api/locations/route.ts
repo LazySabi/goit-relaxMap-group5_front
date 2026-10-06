@@ -4,7 +4,7 @@ import { isAxiosError } from "axios";
 
 import { api } from "../api";
 import { logErrorResponse } from "../auth/_utils/utils";
-import { Location } from "@/types/location";
+import type { Location } from "@/types/location";
 
 type BackendLocationsResponse = {
   data: Location[];
@@ -16,13 +16,13 @@ type BackendLocationsResponse = {
   };
 };
 
-export interface LocationsResponse {
+type LocationsListResponse = {
+  data: Location[];
   page: number;
   limit: number;
+  totalItems: number;
   totalPages: number;
-  totalLocations: number;
-  locations: Location[];
-}
+};
 
 export async function GET(req: NextRequest) {
   try {
@@ -40,19 +40,22 @@ export async function GET(req: NextRequest) {
     let sortBy: "rate" | "updatedAt" = "rate";
     let sortDirection: "asc" | "desc" = "desc";
 
-    if (sort === "newest") {
-      sortBy = "updatedAt";
-      sortDirection = "desc";
-    }
+    switch (sort) {
+      case "newest":
+        sortBy = "updatedAt";
+        sortDirection = "desc";
+        break;
 
-    if (sort === "rating") {
-      sortBy = "rate";
-      sortDirection = "desc";
-    }
+      case "rating":
+        sortBy = "rate";
+        sortDirection = "desc";
+        break;
 
-    if (sort === "popular") {
-      sortBy = "rate";
-      sortDirection = "desc";
+      case "popular":
+      default:
+        sortBy = "rate";
+        sortDirection = "desc";
+        break;
     }
 
     const response = await api.get<BackendLocationsResponse>(
@@ -70,17 +73,22 @@ export async function GET(req: NextRequest) {
       },
     );
 
-    const result: LocationsResponse = {
-      locations: response.data.data,
+    const result: LocationsListResponse = {
+      data: response.data.data,
       page: response.data.pagination.page,
       limit: response.data.pagination.limit,
-      totalLocations: response.data.pagination.totalItems,
+      totalItems: response.data.pagination.totalItems,
       totalPages: response.data.pagination.totalPages,
     };
 
-    return NextResponse.json(result, {
-      status: 200,
-    });
+    return NextResponse.json(
+      {
+        data: result,
+      },
+      {
+        status: 200,
+      },
+    );
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error);
