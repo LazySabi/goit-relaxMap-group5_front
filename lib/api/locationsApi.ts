@@ -56,16 +56,12 @@ export const getRegions = async (): Promise<Region[]> => {
 
 export const getLocationById = async (
   locationId: string,
-): Promise<LocationAuthor> => {
-  const { data } = await api.get<LocationAuthor>(
+): Promise<Location> => {
+  const { data } = await api.get<Location>(
     `/locations/${locationId}`,
   );
 
   return data;
-};
-export type LocationAuthor = {
-  id: string;
-  name: string;
 };
 
 export const getPopularLocations = async (): Promise<Location[]> => {
@@ -78,7 +74,6 @@ export const getPopularLocations = async (): Promise<Location[]> => {
 
 const createFormData = (values: LocationFormData) => {
   const formData = new FormData();
-
   formData.append('name', values.name);
   formData.append('type', values.type);
   formData.append('region', values.region);
