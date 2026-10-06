@@ -34,25 +34,9 @@ const SignIn = () => {
     },
   ) => {
     try {
-      /*
-        Це тимчасова перевірка, доки backend-команда не надасть:
-        - точний endpoint для входу;
-        - формат request body;
-        - формат response;
-        - адресу профілю після авторизації.
+      const user = await login(values);
 
-        Тут згодом буде приблизно так:
-
-        const { data } = await axiosClient.post("/auth/login", values);
-        router.push(`/profile/${data.user._id}`);
-      */
-
-      console.log("Sign in values:", values);
       useAuthStore.getState().setUser(user);
-
-      await new Promise((resolve) => {
-        setTimeout(resolve, 700);
-      });
 
       toast.success("Вхід успішно виконано");
       router.push("/");
