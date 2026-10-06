@@ -1,0 +1,49 @@
+.card {
+  border-radius: 16px;
+  padding: 16px;
+  width: 340px;
+  min-height: 203px;
+  background: var(--color-scheme-2-foreground, #fde8dc);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+.rating {
+  color: #f5a623;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-scheme-2-text, #4c2613);
+}
+
+.author {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-scheme-2-text, #4c2613);
+}
+.type {
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--color-scheme-2-text, #4c2613,);
+}
+
+@media (min-width: 1440px) {
+  .text {
+    font-size: 20px;
+  }
+  .author {
+    font-size: 18px;
+  }
+  .type {
+    font-size: 12px;
+  }
+}

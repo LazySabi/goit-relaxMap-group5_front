@@ -1,4 +1,4 @@
-import { axiosClient as api } from './api';
+import { axiosClient as api } from "./api";
 
 export type LocationType = {
   _id: string;
@@ -15,6 +15,13 @@ export type Region = {
   note?: string;
 };
 
+export type LocationAuthor = {
+  id: string;
+  name?: string;
+  email?: string;
+  avatar?: string;
+};
+
 export type Location = {
   _id: string;
   image: string;
@@ -24,6 +31,7 @@ export type Location = {
   rate: number;
   description: string;
   ownerId: string;
+  author?: LocationAuthor | null;
 };
 
 export type LocationFormData = {
@@ -39,17 +47,14 @@ type ApiResponse<T> = {
 };
 
 export const getLocationTypes = async (): Promise<LocationType[]> => {
-  const { data } = await api.get<ApiResponse<LocationType[]>>(
-    '/categories/types',
-  );
+  const { data } =
+    await api.get<ApiResponse<LocationType[]>>("/categories/types");
 
   return data.data;
 };
 
 export const getRegions = async (): Promise<Region[]> => {
-  const { data } = await api.get<ApiResponse<Region[]>>(
-    '/categories/regions',
-  );
+  const { data } = await api.get<ApiResponse<Region[]>>("/categories/regions");
 
   return data.data;
 };
@@ -57,35 +62,26 @@ export const getRegions = async (): Promise<Region[]> => {
 export const getLocationById = async (
   locationId: string,
 ): Promise<Location> => {
-  const { data } = await api.get<ApiResponse<Location>>(
-    `/locations/${locationId}`,
-  );
+  const { data } = await api.get<Location>(`/locations/${locationId}`);
 
-  return data.data;
-};
-export type LocationAuthor = {
-  id: string;
-  name: string;
+  return data;
 };
 
 export const getPopularLocations = async (): Promise<Location[]> => {
-  const { data } = await api.get<ApiResponse<Location[]>>(
-    "/locations/popular",
-  );
+  const { data } = await api.get<ApiResponse<Location[]>>("/locations/popular");
 
   return data.data;
 };
 
 const createFormData = (values: LocationFormData) => {
   const formData = new FormData();
-
-  formData.append('name', values.name);
-  formData.append('type', values.type);
-  formData.append('region', values.region);
-  formData.append('description', values.description);
+  formData.append("name", values.name);
+  formData.append("type", values.type);
+  formData.append("region", values.region);
+  formData.append("description", values.description);
 
   if (values.images) {
-    formData.append('image', values.images);
+    formData.append("image", values.images);
   }
 
   return formData;
@@ -96,12 +92,9 @@ export const createLocation = async (
 ): Promise<Location> => {
   const formData = createFormData(values);
 
-  const { data } = await api.post<ApiResponse<Location>>(
-    '/locations',
-    formData,
-  );
+  const { data } = await api.post<Location>("/locations", formData);
 
-  return data.data;
+  return data;
 };
 
 export const updateLocation = async (
@@ -110,14 +103,14 @@ export const updateLocation = async (
 ): Promise<Location> => {
   const formData = createFormData(values);
 
-  const { data } = await api.patch<ApiResponse<Location>>(
+  const { data } = await api.patch<Location>(
     `/locations/${locationId}`,
     formData,
   );
 
-  return data.data;
+  return data;
 };
-export type LocationsSort = 'popular' | 'rating' | 'newest';
+export type LocationsSort = "popular" | "rating" | "newest";
 
 export type LocationsQuery = {
   page?: number;
@@ -151,7 +144,7 @@ type BackendLocationsResponse = {
 export const getLocations = async (
   params: LocationsQuery,
 ): Promise<LocationsList> => {
-  const { data } = await api.get<BackendLocationsResponse>('/locations', {
+  const { data } = await api.get<BackendLocationsResponse>("/locations", {
     params,
   });
 

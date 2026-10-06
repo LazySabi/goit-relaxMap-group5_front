@@ -1,81 +1,144 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import toast from "react-hot-toast";
+import { FiMap } from "react-icons/fi";
+
+import { signInValidationSchema } from "@/lib/api/validation/authValidation";
+
 import { login } from "@/lib/api/clientApi";
 import { useAuthStore } from "@/lib/store/authStore";
 import css from "./SignInPage.module.css";
 
-const SignInPage = () => {
+interface SignInValues {
+  email: string;
+  password: string;
+}
+
+const initialValues: SignInValues = {
+  email: "",
+  password: "",
+};
+
+const SignIn = () => {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setError(null);
-    setIsSubmitting(true);
-
+  const handleSubmit = async (
+    values: SignInValues,
+    {
+      setSubmitting,
+    }: {
+      setSubmitting: (isSubmitting: boolean) => void;
+    },
+  ) => {
     try {
-      const user = await login({ email, password });
+      const user = await login(values);
 
       useAuthStore.getState().setUser(user);
 
-      router.push("/profile");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Login failed");
+      toast.success("Вхід успішно виконано");
+      router.push("/");
+    } catch {
+      toast.error("Не вдалося виконати вхід. Спробуйте ще раз.");
     } finally {
-      setIsSubmitting(false);
+      setSubmitting(false);
     }
   };
 
   return (
-    <main className={css.mainContent}>
-      <form onSubmit={handleSubmit} className={css.form}>
-        <h1 className={css.formTitle}>Sign in</h1>
+    <main className={css.page}>
+      <section className={css.authSection}>
+        <Link className={css.logo} href="/">
+          <FiMap aria-hidden="true" className={css.logoIcon} size={24} />
+          <span>Relax Map</span>
+        </Link>
 
-        <div className={css.formGroup}>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            className={css.input}
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
-          />
-        </div>
+        <div className={css.formContainer}>
+          <nav className={css.authNav} aria-label="Навігація авторизації">
+            <Link className={css.navLink} href="/sign-up">
+              Реєстрація
+            </Link>
 
-        <div className={css.formGroup}>
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            className={css.input}
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
-          />
-        </div>
+            <Link
+              aria-current="page"
+              className={`${css.navLink} ${css.activeLink}`}
+              href="/sign-in"
+            >
+              Вхід
+            </Link>
+          </nav>
 
-        <div className={css.actions}>
-          <button
-            type="submit"
-            className={css.submitButton}
-            disabled={isSubmitting}
+          <h1 className={css.title}>Вхід</h1>
+
+          <Formik
+            initialValues={initialValues}
+            validationSchema={signInValidationSchema}
+            onSubmit={handleSubmit}
           >
-            Log in
-          </button>
-        </div>
+            {({ errors, isSubmitting, touched }) => (
+              <Form className={css.form} noValidate>
+                <div className={css.field}>
+                  <label className={css.label} htmlFor="email">
+                    Пошта<span className={css.required}>*</span>
+                  </label>
 
-        {error && <p className={css.error}>{error}</p>}
-      </form>
+                  <Field
+                    autoComplete="email"
+                    className={`${css.input} ${
+                      touched.email && errors.email ? css.inputError : ""
+                    }`}
+                    id="email"
+                    name="email"
+                    placeholder="hello@relaxmap.ua"
+                    type="email"
+                  />
+
+                  <ErrorMessage
+                    className={css.errorMessage}
+                    component="p"
+                    name="email"
+                  />
+                </div>
+
+                <div className={css.field}>
+                  <label className={css.label} htmlFor="password">
+                    Пароль<span className={css.required}>*</span>
+                  </label>
+
+                  <Field
+                    autoComplete="current-password"
+                    className={`${css.input} ${
+                      touched.password && errors.password ? css.inputError : ""
+                    }`}
+                    id="password"
+                    name="password"
+                    placeholder="********"
+                    type="password"
+                  />
+
+                  <ErrorMessage
+                    className={css.errorMessage}
+                    component="p"
+                    name="password"
+                  />
+                </div>
+
+                <button
+                  className={css.submitButton}
+                  disabled={isSubmitting}
+                  type="submit"
+                >
+                  {isSubmitting ? "Вхід..." : "Увійти"}
+                </button>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </section>
     </main>
   );
 };
 
-export default SignInPage;
+export default SignIn;

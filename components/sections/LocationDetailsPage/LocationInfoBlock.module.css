@@ -23,6 +23,16 @@
   object-fit: cover;
 }
 
+.authorLink {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.authorLink:hover,
+.authorLink:focus-visible {
+  opacity: 0.7;
+}
 @media (min-width: 1440px) {
   .section {
     padding-block: 48px;
@@ -30,5 +40,10 @@
 
   .layout {
     grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  }
+
+  .gallery {
+    grid-column: 2;
+    aspect-ratio: 3 / 2;
   }
 }
