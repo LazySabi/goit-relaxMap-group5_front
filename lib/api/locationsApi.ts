@@ -91,12 +91,12 @@ export const createLocation = async (
 ): Promise<Location> => {
   const formData = createFormData(values);
 
-  const { data } = await api.post<ApiResponse<Location>>(
+  const { data } = await api.post<Location>(
     '/locations',
     formData,
   );
 
-  return data.data;
+  return data;
 };
 
 export const updateLocation = async (
@@ -105,12 +105,12 @@ export const updateLocation = async (
 ): Promise<Location> => {
   const formData = createFormData(values);
 
-  const { data } = await api.patch<ApiResponse<Location>>(
+  const { data } = await api.patch<Location>(
     `/locations/${locationId}`,
     formData,
   );
 
-  return data.data;
+  return data;
 };
 export type LocationsSort = 'popular' | 'rating' | 'newest';
 
