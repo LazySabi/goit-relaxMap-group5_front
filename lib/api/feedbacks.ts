@@ -1,19 +1,7 @@
-import axios from "axios";
+import { axiosClient as api } from "./api";
 import type { Review } from "@/components/sections/ReviewsBlock/ReviewsCard";
 
-const API_URL = process.env.NEXT_PUBLIC_SITE_URL;
-
-// interface FeedbacksResponse {
-//   status: number;
-//   message: string;
-//   data: {
-//     feedbacks: Review[];
-//     total: number;
-//     page: number;
-//     totalPages: number;
-//   };
-// }
-interface FeedbacksResponse {
+export interface FeedbacksResponse {
   feedbacks: Review[];
   total: number;
   page: number;
@@ -21,9 +9,8 @@ interface FeedbacksResponse {
   totalPages: number;
 }
 
-interface CreateFeedbacksData {
-  locationId?: string;
-  userName: string;
+export interface CreateFeedbackData {
+  locationId: string;
   rate: number;
   description: string;
 }
@@ -31,12 +18,14 @@ interface CreateFeedbacksData {
 export const fetchFeedbacks = async (
   locationId?: string,
 ): Promise<FeedbacksResponse> => {
-  const params = locationId ? { locationId } : {};
-  const res = await axios.get(`${API_URL}/api/feedbacks`, { params });
-  return res.data;
+  const { data } = await api.get<FeedbacksResponse>("/feedbacks", {
+    params: locationId ? { locationId } : {},
+  });
+
+  return data;
 };
 
-export const createFeedbacks = async (data: CreateFeedbacksData) => {
-  const res = await axios.post(`${API_URL}/api/feedbacks`, data);
-  return res.data;
+export const createFeedback = async (values: CreateFeedbackData) => {
+  const { data } = await api.post("/feedbacks", values);
+  return data;
 };

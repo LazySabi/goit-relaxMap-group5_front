@@ -1,10 +1,10 @@
 body {
-font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
-  background-color: #f8f9fa;
+  background-color: #fff2ec;
 }
 
 * {
@@ -53,11 +53,21 @@ svg {
 }
 
 @media screen and (min-width: 768px) {
-  .container { max-width: 768px; padding: 0 32px; }
-  .secondary-headding { font-size: 44px; }
+  .container {
+    max-width: 768px;
+    padding: 0 32px;
+  }
+  .secondary-headding {
+    font-size: 44px;
+  }
 }
 
 @media screen and (min-width: 1440px) {
-  .container { max-width: 1440px; padding: 0 64px; }
-  .secondary-headding { font-size: 52px; }
+  .container {
+    max-width: 1440px;
+    padding: 0 64px;
+  }
+  .secondary-headding {
+    font-size: 52px;
+  }
 }
