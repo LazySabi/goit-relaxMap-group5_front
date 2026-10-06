@@ -37,27 +37,6 @@ export async function GET(req: NextRequest) {
 
     const sort = searchParams.get("sort") ?? "popular";
 
-    let sortBy: "rate" | "updatedAt" = "rate";
-    let sortDirection: "asc" | "desc" = "desc";
-
-    switch (sort) {
-      case "newest":
-        sortBy = "updatedAt";
-        sortDirection = "desc";
-        break;
-
-      case "rating":
-        sortBy = "rate";
-        sortDirection = "desc";
-        break;
-
-      case "popular":
-      default:
-        sortBy = "rate";
-        sortDirection = "desc";
-        break;
-    }
-
     const response = await api.get<BackendLocationsResponse>(
       "/api/locations",
       {
@@ -67,8 +46,7 @@ export async function GET(req: NextRequest) {
           region,
           type,
           search,
-          sortBy,
-          sortDirection,
+          sort,
         },
       },
     );
