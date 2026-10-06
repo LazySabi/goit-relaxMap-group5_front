@@ -144,16 +144,20 @@ type BackendLocationsResponse = {
 export const getLocations = async (
   params: LocationsQuery,
 ): Promise<LocationsList> => {
-  const { data } = await api.get<BackendLocationsResponse>("/locations", {
-    params,
-  });
+  const { data } = await api.get<Partial<BackendLocationsResponse>>(
+    "/locations",
+    { params },
+  );
+
+  const items = Array.isArray(data.data) ? data.data : [];
+  const p = data.pagination;
 
   return {
-    data: data.data,
-    page: data.pagination.page,
-    limit: data.pagination.limit,
-    totalItems: data.pagination.totalItems,
-    totalPages: data.pagination.totalPages,
-    hasNextPage: data.pagination.hasNextPage,
+    data: items,
+    page: p?.page ?? params.page ?? 1,
+    limit: p?.limit ?? params.limit ?? items.length,
+    totalItems: p?.totalItems ?? items.length,
+    totalPages: p?.totalPages ?? 1,
+    hasNextPage: p?.hasNextPage ?? false,
   };
 };
