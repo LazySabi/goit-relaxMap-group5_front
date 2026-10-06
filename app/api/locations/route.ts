@@ -16,7 +16,7 @@ type BackendLocationsResponse = {
   };
 };
 
-type LocationsListResponse = {
+export type LocationsListResponse = {
   data: Location[];
   page: number;
   limit: number;
