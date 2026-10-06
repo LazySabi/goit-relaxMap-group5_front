@@ -58,15 +58,11 @@ export const getRegions = async (): Promise<Region[]> => {
 export const getLocationById = async (
   locationId: string,
 ): Promise<Location> => {
-  const { data } = await api.get<ApiResponse<Location>>(
+  const { data } = await api.get<Location>(
     `/locations/${locationId}`,
   );
 
-  return data.data;
-};
-export type LocationAuthor = {
-  id: string;
-  name: string;
+  return data;
 };
 
 export const getPopularLocations = async (): Promise<Location[]> => {
@@ -79,7 +75,6 @@ export const getPopularLocations = async (): Promise<Location[]> => {
 
 const createFormData = (values: LocationFormData) => {
   const formData = new FormData();
-
   formData.append('name', values.name);
   formData.append('type', values.type);
   formData.append('region', values.region);
@@ -97,12 +92,12 @@ export const createLocation = async (
 ): Promise<Location> => {
   const formData = createFormData(values);
 
-  const { data } = await api.post<ApiResponse<Location>>(
+  const { data } = await api.post<Location>(
     '/locations',
     formData,
   );
 
-  return data.data;
+  return data;
 };
 
 export const updateLocation = async (
@@ -111,12 +106,12 @@ export const updateLocation = async (
 ): Promise<Location> => {
   const formData = createFormData(values);
 
-  const { data } = await api.patch<ApiResponse<Location>>(
+  const { data } = await api.patch<Location>(
     `/locations/${locationId}`,
     formData,
   );
 
-  return data.data;
+  return data;
 };
 export type LocationsSort = 'popular' | 'rating' | 'newest';
 
