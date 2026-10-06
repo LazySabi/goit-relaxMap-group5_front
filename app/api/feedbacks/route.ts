@@ -3,17 +3,6 @@ import { logErrorResponse } from "@/app/api/auth/_utils/utils";
 import { isAxiosError } from "axios";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import type { Review } from "@/components/sections/ReviewsBlock/ReviewsCard";
-
-type BackendFeedbacksResponse = {
-  data: Review[];
-  pagination: {
-    page: number;
-    limit: number;
-    totalItems: number;
-    totalPages: number;
-  };
-};
 
 const handleError = (error: unknown) => {
   if (isAxiosError(error)) {
@@ -48,30 +37,20 @@ export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
 
-    const response = await api.get<BackendFeedbacksResponse>(
-      "/api/feedbacks",
-      {
-        params: {
-          locationId:
-            searchParams.get("locationId") ?? undefined,
-          page: searchParams.get("page") ?? undefined,
-          limit: searchParams.get("limit") ?? undefined,
-        },
+    const response = await api.get("/api/feedbacks", {
+      params: {
+        locationId:
+          searchParams.get("locationId") ?? undefined,
+        page:
+          searchParams.get("page") ?? undefined,
+        limit:
+          searchParams.get("limit") ?? undefined,
       },
-    );
+    });
 
-    return NextResponse.json(
-      {
-        feedbacks: response.data.data,
-        total: response.data.pagination.totalItems,
-        page: response.data.pagination.page,
-        limit: response.data.pagination.limit,
-        totalPages: response.data.pagination.totalPages,
-      },
-      {
-        status: 200,
-      },
-    );
+    return NextResponse.json(response.data, {
+      status: response.status,
+    });
   } catch (error) {
     return handleError(error);
   }
@@ -92,12 +71,9 @@ export async function POST(request: NextRequest) {
       },
     );
 
-    return NextResponse.json(
-      response.data,
-      {
-        status: response.status,
-      },
-    );
+    return NextResponse.json(response.data, {
+      status: response.status,
+    });
   } catch (error) {
     return handleError(error);
   }
