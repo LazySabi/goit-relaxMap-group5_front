@@ -2,17 +2,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { Location } from '@/lib/api/locationsApi';
 import RatingStars from '@/components/ui/RatingStars/RatingStars';
-import Icon from '@/components/ui/Icon/Icon';
 import css from './LocationCard.module.css';
 
 type Props = {
   location: Location;
   typeName?: string;
-  /** Показати кнопку редагування (тільки у власному профілі автора) */
-  canEdit?: boolean;
 };
 
-export default function LocationCard({ location, typeName, canEdit = false }: Props) {
+export default function LocationCard({ location, typeName }: Props) {
   const rate = Number(location.rate) || 0;
 
   return (
@@ -36,27 +33,13 @@ export default function LocationCard({ location, typeName, canEdit = false }: Pr
 
         <h3 className={css.name}>{location.name}</h3>
 
-        <div className={css.actions}>
-          <Link
-            href={`/locations/${location._id}`}
-            className={css.btn}
-            prefetch={false}
-          >
-            Переглянути локацію
-          </Link>
-
-          {canEdit && (
-            <Link
-              href={`/locations/${location._id}/edit`}
-              className={css.editBtn}
-              prefetch={false}
-              aria-label={`Редагувати локацію ${location.name}`}
-              title="Редагувати"
-            >
-              <Icon name="edit" width={24} />
-            </Link>
-          )}
-        </div>
+        <Link
+          href={`/locations/${location._id}`}
+          className={css.btn}
+          prefetch={false}
+        >
+          Переглянути локацію
+        </Link>
       </div>
     </article>
   );
