@@ -1,9 +1,10 @@
 .stars {
   display: flex;
+  align-items: center;
   gap: 2px;
+  color: #000;
 }
 
 .star {
-  font-size: 18px;
-  color: #f5a623;
+  flex-shrink: 0;
 }

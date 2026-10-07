@@ -10,6 +10,8 @@ import { fetchFeedbacks } from "@/lib/api/feedbacks";
 import ReviewCard from "./ReviewsCard";
 import css from "./ReviewsBlock.module.css";
 
+const SPRITE = "/sprite.svg";
+
 interface ReviewsBlockProps {
   locationId?: string;
   title?: string;
@@ -71,7 +73,9 @@ const ReviewsBlock = ({
               aria-label="Попередній відгук"
               onClick={() => swiperRef.current?.slidePrev()}
             >
-              ←
+              <svg className={css.icon} aria-hidden="true">
+                <use href={`${SPRITE}#arrow_back`} />
+              </svg>
             </button>
             <button
               type="button"
@@ -79,7 +83,9 @@ const ReviewsBlock = ({
               aria-label="Наступний відгук"
               onClick={() => swiperRef.current?.slideNext()}
             >
-              →
+              <svg className={css.icon} aria-hidden="true">
+                <use href={`${SPRITE}#arrow_forward`} />
+              </svg>
             </button>
           </div>
         </div>
