@@ -13,7 +13,13 @@ export async function GET(req: NextRequest, { params }: Props) {
 
     const response = await api.get(`/api/users/${userId}`);
 
-    return NextResponse.json(response.data, { status: response.status });
+    // Бекенд віддає "id", а фронт усюди працює з "_id"
+    const { id, ...rest } = response.data;
+
+    return NextResponse.json(
+      { ...rest, _id: rest._id ?? id },
+      { status: response.status },
+    );
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);

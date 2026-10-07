@@ -9,12 +9,16 @@ type Props = {
   params: Promise<{ userId: string }>;
 };
 
+// Формат відповіді бекенду: GET /api/users/:userId/locations
 interface LocationsApiResponse {
-  locations: Location[];
-  page: number;
-  limit: number;
-  totalPages: number;
-  totalLocations: number;
+  data: Location[];
+  pagination: {
+    page: number;
+    limit: number;
+    totalItems: number;
+    totalPages: number;
+    hasNextPage: boolean;
+  };
 }
 
 export async function GET(request: NextRequest, { params }: Props) {
@@ -37,13 +41,14 @@ export async function GET(request: NextRequest, { params }: Props) {
       },
     );
 
-    const { locations, totalLocations } = locationsResponse.data;
+    const { data: locations = [], pagination } = locationsResponse.data;
+    const total = pagination?.totalItems ?? locations.length;
 
     return NextResponse.json(
       {
         locations,
-        total: totalLocations,
-        isEmpty: totalLocations === 0,
+        total,
+        isEmpty: total === 0,
       },
       { status: locationsResponse.status },
     );
@@ -54,7 +59,7 @@ export async function GET(request: NextRequest, { params }: Props) {
       logErrorResponse(error.response?.data);
       return NextResponse.json(
         { error: error.message, response: error.response?.data },
-        { status: error.status },
+        { status: error.response?.status ?? 500 },
       );
     }
 
