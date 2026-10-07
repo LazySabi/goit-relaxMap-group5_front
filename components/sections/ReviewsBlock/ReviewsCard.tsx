@@ -31,8 +31,7 @@
 // };
 
 // export default ReviewCard;
-import RatingStars from "../../ui/RatingStars/RatingStars";
-import css from "./ReviewsCard.module.css";
+import StarRating from "./StarRating";
 
 export interface Review {
   _id: string;
@@ -46,7 +45,8 @@ export interface Review {
 const ReviewCard = ({ review }: { review: Review }) => {
   return (
     <div className={css.card}>
-      <RatingStars value={review.rate} />
+      <StarRating rate={review.rate} />
+
       <p className={css.text}>{review.description}</p>
       <div className={css.authorInfo}>
         <p className={css.author}>{review.userName}</p>

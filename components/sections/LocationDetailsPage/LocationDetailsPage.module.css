@@ -11,8 +11,8 @@
     "gallery"
     "info";
   grid-template-columns: minmax(0, 1fr);
-  gap: 32px;
-  padding-block: 32px;
+  gap: 24px;
+  padding: 32px;
 }
 
 .gallery {
@@ -32,7 +32,7 @@
       minmax(0, 2fr)
       minmax(0, 3fr);
     align-items: center;
-    gap: 32px;
+    gap: 24px;
     padding-block: 48px;
   }
 }

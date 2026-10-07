@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Location } from "@/lib/api/locationsApi";
 import css from "./LocationInfoBlock.module.css";
-import StarRating from "@/components/sections/ReviewsBlock/StarRating";
+//import StarRating from "@/components/sections/ReviewsBlock/StarRating";
 
 type LocationInfoBlockProps = {
   location: Location;
@@ -18,7 +18,7 @@ export default function LocationInfoBlock({
       <div className={css.layout}>
         <div className={css.content}>
         <div className={css.rating}>
-  <StarRating rate={location.rate} />
+  
   <span className={css.rateValue}>·{location.rate.toFixed(1)}</span>
 </div>
 

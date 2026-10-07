@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Location } from '@/lib/api/locationsApi';
+import RatingStars from '@/components/ui/RatingStars/RatingStars';
 import css from './LocationCard.module.css';
 
 type Props = {
@@ -9,6 +10,8 @@ type Props = {
 };
 
 export default function LocationCard({ location, typeName }: Props) {
+  const rate = Number(location.rate) || 0;
+
   return (
     <article className={css.card}>
       <div className={css.imageWrap}>
@@ -24,12 +27,17 @@ export default function LocationCard({ location, typeName }: Props) {
       <div className={css.info}>
         <p className={css.type}>{typeName ?? location.locationType}</p>
 
-        {/* TODO: <Rating value={location.rate} />*/}
-        <div className={css.rating} aria-hidden="true" />
+        <div className={css.rating}>
+          <RatingStars value={rate} />
+        </div>
 
         <h3 className={css.name}>{location.name}</h3>
 
-        <Link href={`/locations/${location._id}`} className={css.btn} prefetch={false}>
+        <Link
+          href={`/locations/${location._id}`}
+          className={css.btn}
+          prefetch={false}
+        >
           Переглянути локацію
         </Link>
       </div>

@@ -6,4 +6,12 @@
 .star {
   font-size: 17px;
   color: #000;
+  align-items: center;
+  gap: 2px;
+  color: #000;
+}
+
+.star {
+  flex-shrink: 0;
+  gap: 2px;
 }
