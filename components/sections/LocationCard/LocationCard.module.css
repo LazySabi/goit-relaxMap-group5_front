@@ -69,38 +69,6 @@
     color: var(--text-secondary);
 }
 
-.actions {
-    margin-top: auto;
-    display: flex;
-    gap: 8px;
-}
-
-.actions .btn {
-    flex: 1;
-    margin-top: 0;
-}
-
-.editBtn {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    color: var(--text-third);
-    background: rgba(76, 38, 19, 0.05);
-    border: 1px solid rgba(76, 38, 19, 0.1);
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-}
-
-.editBtn:hover,
-.editBtn:focus-visible {
-    background: var(--button-primary);
-    color: var(--text-secondary);
-}
-
 @media (min-width: 1440px) {
 
     .type {
