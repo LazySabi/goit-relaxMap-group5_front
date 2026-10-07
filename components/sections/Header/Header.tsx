@@ -10,10 +10,8 @@ import {
 } from "react-icons/lu";
 
 import Logo from "../../ui/Logo/Logo";
-import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store/authStore";
-import { logout } from "@/lib/api/clientApi";
-import ConfirmationModal from "@/components/sections/ConfirmationModal/ConfirmationModal";
+import LogoutModal from "@/components/auth/LogoutModal/LogoutModal";
 
 import css from "./Header.module.css";
 
@@ -31,12 +29,6 @@ const Header = () => {
   );
 
   const user = useAuthStore((state) => state.user);
-
-  const clearIsAuthenticated = useAuthStore(
-    (state) => state.clearIsAuthenticated,
-  );
-
-  const router = useRouter();
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "";
@@ -66,13 +58,6 @@ const Header = () => {
   };
 
   const closeLogoutModal = () => setIsLogoutModalOpen(false);
-
-  const handleLogout = async () => {
-    await logout();
-    clearIsAuthenticated();
-    setIsLogoutModalOpen(false);
-    router.replace("/");
-  };
 
   return (
     <header className={css.header}>
@@ -319,16 +304,7 @@ const Header = () => {
         </div>
       </div>
 
-      {isLogoutModalOpen && (
-        <ConfirmationModal
-          title="Ви точно хочете вийти?"
-          subtitle="Ми будемо сумувати за вами!"
-          confirmButtonText="Вийти"
-          cancelButtonText="Відмінити"
-          onConfirm={handleLogout}
-          onCancel={closeLogoutModal}
-        />
-      )}
+      {isLogoutModalOpen && <LogoutModal onClose={closeLogoutModal} />}
     </header>
   );
 };
