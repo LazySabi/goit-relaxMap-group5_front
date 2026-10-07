@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Location } from "@/lib/api/locationsApi";
 import css from "./LocationInfoBlock.module.css";
 //import StarRating from "@/components/sections/ReviewsBlock/StarRating";
+import EditLocationButton from "./EditLocationButton";
 
 type LocationInfoBlockProps = {
   location: Location;
@@ -39,6 +40,11 @@ export default function LocationInfoBlock({
     author?.name
   )}
 </p>
+
+          <EditLocationButton
+            locationId={location._id}
+            ownerId={location.ownerId ?? author?.id}
+          />
         </div>
 
         <div className={css.gallery}>

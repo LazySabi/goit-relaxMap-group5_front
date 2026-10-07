@@ -129,6 +129,12 @@ export default function ProfilePage({ userId }: ProfilePageProps) {
                   <LocationCard
                     location={location}
                     typeName={typeNames[location.locationType]}
+                    // Кнопка редагування — тільки у власному профілі
+                    // і тільки для локацій, автор яких — поточний юзер
+                    canEdit={
+                      isOwnProfile &&
+                      String(location.ownerId) === String(user._id)
+                    }
                   />
                 </li>
               ))}
