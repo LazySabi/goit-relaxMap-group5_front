@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -132,6 +133,8 @@ export default function LocationForm({
   locationId,
   initialData,
 }: LocationFormProps) {
+  const router = useRouter();
+
   const [locationTypes, setLocationTypes] = useState<
     LocationType[]
   >([]);
@@ -219,14 +222,29 @@ export default function LocationForm({
         onSubmit={async (values) => {
           if (isEditMode) {
             if (!locationId) {
-              throw new Error('Location ID is required for editing');
+              throw new Error(
+                'Location ID is required for editing',
+              );
             }
 
-            await updateLocation(locationId, values);
+            const updatedLocation = await updateLocation(
+              locationId,
+              values,
+            );
+
+            router.push(
+              `/locations/${updatedLocation._id}`,
+            );
+
             return;
           }
 
-          await createLocation(values);
+          const createdLocation =
+            await createLocation(values);
+
+          router.push(
+            `/locations/${createdLocation._id}`,
+          );
         }}
       >
         {({
