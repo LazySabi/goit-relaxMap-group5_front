@@ -25,6 +25,7 @@ export default function ConfirmationModal({
   const [isLoading, setIsLoading] = useState(false);
 
   const handleConfirm = async () => {
+    if (isLoading) return;
     setIsLoading(true);
     try {
       await onConfirm();
@@ -40,7 +41,8 @@ export default function ConfirmationModal({
   };
 
   const handleClose = () => {
-    if (!isLoading) onCancel();
+    if (isLoading) return;
+    onCancel();
   };
 
   return (
@@ -66,7 +68,11 @@ export default function ConfirmationModal({
           disabled={isLoading}
         >
           {isLoading ? (
-            <span className={css.loader} aria-label="Завантаження" />
+            <span
+              className={css.loader}
+              aria-label="Завантаження"
+              role="status"
+            />
           ) : (
             confirmButtonText
           )}
