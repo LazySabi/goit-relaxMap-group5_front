@@ -1,8 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import toast from 'react-hot-toast';
+import { isAxiosError } from 'axios';
 
 import ImageUploader from '../ImageUploader/ImageUploader';
 import {
@@ -132,6 +135,8 @@ export default function LocationForm({
   locationId,
   initialData,
 }: LocationFormProps) {
+  const router = useRouter();
+
   const [locationTypes, setLocationTypes] = useState<
     LocationType[]
   >([]);
@@ -219,14 +224,48 @@ export default function LocationForm({
         onSubmit={async (values) => {
           if (isEditMode) {
             if (!locationId) {
-              throw new Error('Location ID is required for editing');
+              throw new Error(
+                'Location ID is required for editing',
+              );
             }
 
-            await updateLocation(locationId, values);
+            try {
+              const updatedLocation = await updateLocation(
+                locationId,
+                values,
+              );
+
+              toast.success('Зміни збережено');
+              router.push(
+                `/locations/${updatedLocation?._id ?? locationId}`,
+              );
+              router.refresh();
+            } catch (error) {
+              console.error(error);
+              const status = isAxiosError(error)
+                ? error.response?.status
+                : undefined;
+
+              toast.error(
+                status === 403
+                  ? 'Редагувати можна тільки власні локації.'
+                  : status === 401
+                    ? 'Сесія завершилась. Увійдіть знову.'
+                    : 'Не вдалося зберегти зміни. Спробуйте ще раз.',
+              );
+
+              if (status === 401) router.push('/sign-in');
+            }
+
             return;
           }
 
-          await createLocation(values);
+          const createdLocation =
+            await createLocation(values);
+
+          router.push(
+            `/locations/${createdLocation._id}`,
+          );
         }}
       >
         {({

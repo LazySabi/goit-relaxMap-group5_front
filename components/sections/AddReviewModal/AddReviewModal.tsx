@@ -83,9 +83,33 @@ export default function AddReviewModal({
         {({ values, setFieldValue, isSubmitting }) => (
           <Form className={css.form}>
             <div className={css.field}>
-              <span className={css.label}>Ваша оцінка*</span>
+              <div className={css.field}>
+              <label htmlFor="review-description" className={css.label}>
+                Ваш відгук
+              </label>
 
-              <div className={css.stars} role="radiogroup" aria-label="Оцінка">
+              <Field
+                as="textarea"
+                id="review-description"
+                name="description"
+                rows={5}
+                maxLength={200}
+                placeholder="Напишіть ваш відгук"
+                className={css.textarea}
+              />
+
+              <span className={css.counter}>
+                {values.description.length}/200
+              </span>
+
+              <ErrorMessage
+                name="description"
+                component="span"
+                className={css.error}
+              />
+            </div>
+
+<div className={css.stars} role="radiogroup" aria-label="Оцінка">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
                     key={star}
@@ -107,33 +131,6 @@ export default function AddReviewModal({
 
               <ErrorMessage name="rate" component="span" className={css.error} />
             </div>
-
-            <div className={css.field}>
-              <label htmlFor="review-description" className={css.label}>
-                Відгук
-              </label>
-
-              <Field
-                as="textarea"
-                id="review-description"
-                name="description"
-                rows={5}
-                maxLength={200}
-                placeholder="Поділіться своїми враженнями"
-                className={css.textarea}
-              />
-
-              <span className={css.counter}>
-                {values.description.length}/200
-              </span>
-
-              <ErrorMessage
-                name="description"
-                component="span"
-                className={css.error}
-              />
-            </div>
-
             <div className={css.actions}>
               <button
                 type="button"

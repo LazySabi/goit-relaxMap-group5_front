@@ -36,6 +36,11 @@ export const getMe = async (): Promise<User> => {
   return data;
 };
 
+export const getUserById = async (userId: string): Promise<User> => {
+  const { data } = await api.get<User>(`/users/${userId}`);
+  return data;
+};
+
 export const fetchLocations = async ({
   page = 1,
   limit = 10,

@@ -2,8 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Location } from "@/lib/api/locationsApi";
 import css from "./LocationInfoBlock.module.css";
-import StarRating from "@/components/sections/ReviewsBlock/StarRating";
-
+import RatingStars from "../../ui/RatingStars/RatingStars";
 type LocationInfoBlockProps = {
   location: Location;
 };
@@ -18,7 +17,7 @@ export default function LocationInfoBlock({
       <div className={css.layout}>
         <div className={css.content}>
         <div className={css.rating}>
-  <StarRating rate={location.rate} />
+  <RatingStars value={location.rate} />
   <span className={css.rateValue}>·{location.rate.toFixed(1)}</span>
 </div>
 
@@ -31,9 +30,13 @@ export default function LocationInfoBlock({
           </p>
           <p className={css.text}>
   <span>Автор статті:</span>{" "}
-  <Link href={`/profile/${location.author?.id}`} className={css.authorLink}>
-    {author?.name}
-  </Link>
+  {author?.id ? (
+    <Link href={`/profile/${author.id}`} className={css.authorLink}>
+      {author.name}
+    </Link>
+  ) : (
+    author?.name
+  )}
 </p>
         </div>
 

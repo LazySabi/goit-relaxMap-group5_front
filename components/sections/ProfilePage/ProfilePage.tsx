@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { fetchUserLocations, getMe } from "@/lib/api/clientApi";
+import { fetchUserLocations, getMe, getUserById } from "@/lib/api/clientApi";
 import { getLocationTypes } from "@/lib/api/locationsApi";
 import { useAuthStore } from "@/lib/store/authStore";
 import { useEditProfileModal } from "@/lib/store/editProfileModalStore";
@@ -19,27 +19,41 @@ const getPageSize = () =>
     ? 6
     : 4;
 
-export default function ProfilePage() {
+interface ProfilePageProps {
+  /** Якщо передано — показуємо публічний профіль цього користувача */
+  userId?: string;
+}
+
+export default function ProfilePage({ userId }: ProfilePageProps) {
   const router = useRouter();
+  const currentUserId = useAuthStore((state) => state.user._id);
+  const isOwnProfile = !userId;
   const [limit] = useState(getPageSize);
   const [page, setPage] = useState(1);
   const sectionRef = useRef<HTMLElement>(null);
   const setUser = useAuthStore((state) => state.setUser);
   const openEditModal = useEditProfileModal((state) => state.open);
 
+  // Відкрили власний профіль через /profile/:id — ведемо на /profile
+  useEffect(() => {
+    if (userId && currentUserId && userId === currentUserId) {
+      router.replace("/profile");
+    }
+  }, [userId, currentUserId, router]);
+
   const { data: user, isError: isUserError } = useQuery({
-    queryKey: ["currentUser"],
-    queryFn: getMe,
+    queryKey: isOwnProfile ? ["currentUser"] : ["user", userId],
+    queryFn: () => (isOwnProfile ? getMe() : getUserById(userId!)),
     retry: false,
   });
 
   useEffect(() => {
-    if (user) setUser(user);
-  }, [user, setUser]);
+    if (isOwnProfile && user) setUser(user);
+  }, [isOwnProfile, user, setUser]);
 
   useEffect(() => {
-    if (isUserError) router.replace("/sign-in");
-  }, [isUserError, router]);
+    if (isOwnProfile && isUserError) router.replace("/sign-in");
+  }, [isOwnProfile, isUserError, router]);
 
   const { data: types = [] } = useQuery({
     queryKey: ["location-types"],
@@ -64,6 +78,16 @@ export default function ProfilePage() {
     sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  if (!isOwnProfile && isUserError) {
+    return (
+      <main className={css.page}>
+        <div className={`container ${css.inner}`}>
+          <p className={css.message}>Користувача не знайдено.</p>
+        </div>
+      </main>
+    );
+  }
+
   if (!user) {
     return (
       <main className={css.page}>
@@ -77,12 +101,19 @@ export default function ProfilePage() {
 
   return (
     <main className={css.page}>
-      <ProfileInfo user={user} onEdit={openEditModal} />
+      <ProfileInfo
+        user={user}
+        onEdit={isOwnProfile ? openEditModal : undefined}
+      />
 
       <section className={css.locations} ref={sectionRef}>
         <div className={`container ${css.inner}`}>
           {isLocationsLoading && (
-            <div className={css.loader} role="status" aria-label="Завантаження" />
+            <div
+              className={css.loader}
+              role="status"
+              aria-label="Завантаження"
+            />
           )}
 
           {isLocationsError && (
@@ -91,9 +122,11 @@ export default function ProfilePage() {
             </p>
           )}
 
-          {!isLocationsLoading && !isLocationsError && locations.length === 0 && (
-            <ProfilePlaceholder isOwnProfile />
-          )}
+          {!isLocationsLoading &&
+            !isLocationsError &&
+            locations.length === 0 && (
+              <ProfilePlaceholder isOwnProfile={isOwnProfile} />
+            )}
 
           {locations.length > 0 && (
             <ul className={css.grid}>
@@ -102,6 +135,10 @@ export default function ProfilePage() {
                   <LocationCard
                     location={location}
                     typeName={typeNames[location.locationType]}
+                    canEdit={
+                      isOwnProfile &&
+                      String(location.ownerId) === String(user._id)
+                    }
                   />
                 </li>
               ))}

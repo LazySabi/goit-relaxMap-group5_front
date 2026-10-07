@@ -1,6 +1,7 @@
 "use client";
 
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 import { logout } from "@/lib/api/clientApi";
 import { useAuthStore } from "@/lib/store/authStore";
 import Button from "@/components/ui/Button/Button";
@@ -12,6 +13,7 @@ interface LogoutModalProps {
 }
 
 const LogoutModal = ({ onClose }: LogoutModalProps) => {
+  const router = useRouter();
   const clearIsAuthenticated = useAuthStore(
     (state) => state.clearIsAuthenticated,
   );
@@ -21,6 +23,7 @@ const LogoutModal = ({ onClose }: LogoutModalProps) => {
       .then(() => {
         clearIsAuthenticated();
         onClose();
+        router.replace("/");
       })
       .catch(() => {
         toast.error("Не вдалося вийти. Спробуйте ще раз.");

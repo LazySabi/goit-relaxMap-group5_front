@@ -11,7 +11,7 @@ import {
 
 import Logo from "../../ui/Logo/Logo";
 import { useAuthStore } from "@/lib/store/authStore";
-import { logout } from "@/lib/api/clientApi";
+import LogoutModal from "@/components/auth/LogoutModal/LogoutModal";
 
 import css from "./Header.module.css";
 
@@ -22,16 +22,13 @@ const publicNavLinks = [
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const isAuthenticated = useAuthStore(
     (state) => state.isAuthenticated,
   );
 
   const user = useAuthStore((state) => state.user);
-
-  const clearIsAuthenticated = useAuthStore(
-    (state) => state.clearIsAuthenticated,
-  );
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "";
@@ -55,14 +52,12 @@ const Header = () => {
 
   const closeMenu = () => setIsMenuOpen(false);
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } finally {
-      clearIsAuthenticated();
-      closeMenu();
-    }
+  const openLogoutModal = () => {
+    closeMenu();
+    setIsLogoutModalOpen(true);
   };
+
+  const closeLogoutModal = () => setIsLogoutModalOpen(false);
 
   return (
     <header className={css.header}>
@@ -130,7 +125,7 @@ const Header = () => {
               <button
                 type="button"
                 className={css.logoutBtn}
-                onClick={handleLogout}
+                onClick={openLogoutModal}
                 aria-label="Вийти з акаунта"
                 title="Вийти"
               >
@@ -156,21 +151,53 @@ const Header = () => {
           )}
         </div>
 
-        <button
-          type="button"
-          className={css.burger}
-          aria-label={
-            isMenuOpen ? "Закрити меню" : "Відкрити меню"
-          }
-          aria-expanded={isMenuOpen}
-          onClick={() => setIsMenuOpen((prev) => !prev)}
-        >
-          {isMenuOpen ? (
-            <LuX size={26} />
-          ) : (
-            <LuMenu size={26} />
-          )}
-        </button>
+        <div className={css.controls}>
+          <div className={css.tabletActions}>
+            {isAuthenticated ? (
+              <Link
+                href="/locations/create"
+                className={css.shareLocationBtn}
+                onClick={closeMenu}
+              >
+                Поділитись локацією
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/sign-in"
+                  className={css.signInBtn}
+                  onClick={closeMenu}
+                >
+                  Вхід
+                </Link>
+
+                <Link
+                  href="/sign-up"
+                  className={css.signUpBtn}
+                  onClick={closeMenu}
+                >
+                  Реєстрація
+                </Link>
+              </>
+            )}
+          </div>
+
+          <button
+            type="button"
+            className={css.burger}
+            aria-label={
+              isMenuOpen ? "Закрити меню" : "Відкрити меню"
+            }
+            aria-expanded={isMenuOpen}
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+          >
+            {isMenuOpen ? (
+              <LuX size={24} />
+            ) : (
+              <LuMenu size={24} />
+            )}
+          </button>
+        </div>
       </div>
 
       <div
@@ -179,97 +206,105 @@ const Header = () => {
         }`}
         aria-hidden={!isMenuOpen}
       >
-        <nav aria-label="Мобільна навігація">
-          <ul className={css.mobileNavList}>
-            {publicNavLinks.map(({ href, label }) => (
-              <li key={href}>
-                <Link
-                  href={href}
-                  className={css.mobileNavLink}
-                  onClick={closeMenu}
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
+        <div className={`container ${css.mobileMenuInner}`}>
+          <nav aria-label="Мобільна навігація">
+            <ul className={css.mobileNavList}>
+              {publicNavLinks.map(({ href, label }) => (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className={css.mobileNavLink}
+                    onClick={closeMenu}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
 
-            {isAuthenticated && (
-              <li>
-                <Link
-                  href="/profile"
-                  className={css.mobileNavLink}
-                  onClick={closeMenu}
-                >
-                  Мій Профіль
-                </Link>
-              </li>
-            )}
-          </ul>
-        </nav>
+              {isAuthenticated && (
+                <li>
+                  <Link
+                    href="/profile"
+                    className={css.mobileNavLink}
+                    onClick={closeMenu}
+                  >
+                    Мій Профіль
+                  </Link>
+                </li>
+              )}
+            </ul>
+          </nav>
 
-        {isAuthenticated ? (
-          <div className={css.mobileAuthorizedActions}>
-            <Link
-              href="/locations/create"
-              className={css.shareLocationBtn}
-              onClick={closeMenu}
-            >
-              Поділитись локацією
-            </Link>
-
-            <div className={css.mobileUserRow}>
+          {isAuthenticated ? (
+            <div className={css.mobileActions}>
               <Link
-                href="/profile"
-                className={css.userInfo}
+                href="/locations/create"
+                className={`${css.shareLocationBtn} ${css.mobileOnly}`}
                 onClick={closeMenu}
               >
-                {user.avatarUrl ? (
-                  <img
-                    src={user.avatarUrl}
-                    alt=""
-                    className={css.avatar}
-                  />
-                ) : (
-                  <span className={css.avatarFallback}>
-                    <LuUserRound size={16} />
-                  </span>
-                )}
-
-                <span className={css.userName}>
-                  {user.name || "Користувач"}
-                </span>
+                Поділитись локацією
               </Link>
 
-              <button
-                type="button"
-                className={css.logoutBtn}
-                onClick={handleLogout}
-                aria-label="Вийти з акаунта"
-              >
-                <LuLogOut size={20} />
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className={css.mobileAuthActions}>
-            <Link
-              href="/sign-in"
-              className={css.signInBtn}
-              onClick={closeMenu}
-            >
-              Вхід
-            </Link>
+              <div className={css.mobileUserRow}>
+                <Link
+                  href="/profile"
+                  className={css.userInfo}
+                  onClick={closeMenu}
+                >
+                  {user.avatarUrl ? (
+                    <img
+                      src={user.avatarUrl}
+                      alt=""
+                      className={css.avatar}
+                    />
+                  ) : (
+                    <span className={css.avatarFallback}>
+                      <LuUserRound size={16} />
+                    </span>
+                  )}
 
-            <Link
-              href="/sign-up"
-              className={css.signUpBtn}
-              onClick={closeMenu}
+                  <span className={css.userName}>
+                    {user.name || "Користувач"}
+                  </span>
+                </Link>
+
+                <span className={css.divider} aria-hidden="true" />
+
+                <button
+                  type="button"
+                  className={css.logoutBtn}
+                  onClick={openLogoutModal}
+                  aria-label="Вийти з акаунта"
+                >
+                  <LuLogOut size={20} />
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div
+              className={`${css.mobileActions} ${css.mobileOnly}`}
             >
-              Реєстрація
-            </Link>
-          </div>
-        )}
+              <Link
+                href="/sign-in"
+                className={css.signInBtn}
+                onClick={closeMenu}
+              >
+                Вхід
+              </Link>
+
+              <Link
+                href="/sign-up"
+                className={css.signUpBtn}
+                onClick={closeMenu}
+              >
+                Реєстрація
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
+
+      {isLogoutModalOpen && <LogoutModal onClose={closeLogoutModal} />}
     </header>
   );
 };
