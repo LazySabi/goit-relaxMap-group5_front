@@ -11,7 +11,7 @@ import {
 
 import Logo from "../../ui/Logo/Logo";
 import { useAuthStore } from "@/lib/store/authStore";
-import { logout } from "@/lib/api/clientApi";
+import LogoutModal from "@/components/auth/LogoutModal/LogoutModal";
 
 import css from "./Header.module.css";
 
@@ -22,16 +22,13 @@ const publicNavLinks = [
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const isAuthenticated = useAuthStore(
     (state) => state.isAuthenticated,
   );
 
   const user = useAuthStore((state) => state.user);
-
-  const clearIsAuthenticated = useAuthStore(
-    (state) => state.clearIsAuthenticated,
-  );
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "";
@@ -55,14 +52,12 @@ const Header = () => {
 
   const closeMenu = () => setIsMenuOpen(false);
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } finally {
-      clearIsAuthenticated();
-      closeMenu();
-    }
+  const openLogoutModal = () => {
+    closeMenu();
+    setIsLogoutModalOpen(true);
   };
+
+  const closeLogoutModal = () => setIsLogoutModalOpen(false);
 
   return (
     <header className={css.header}>
@@ -130,7 +125,7 @@ const Header = () => {
               <button
                 type="button"
                 className={css.logoutBtn}
-                onClick={handleLogout}
+                onClick={openLogoutModal}
                 aria-label="Вийти з акаунта"
                 title="Вийти"
               >
@@ -278,7 +273,7 @@ const Header = () => {
                 <button
                   type="button"
                   className={css.logoutBtn}
-                  onClick={handleLogout}
+                  onClick={openLogoutModal}
                   aria-label="Вийти з акаунта"
                 >
                   <LuLogOut size={20} />
@@ -308,6 +303,8 @@ const Header = () => {
           )}
         </div>
       </div>
+
+      {isLogoutModalOpen && <LogoutModal onClose={closeLogoutModal} />}
     </header>
   );
 };
