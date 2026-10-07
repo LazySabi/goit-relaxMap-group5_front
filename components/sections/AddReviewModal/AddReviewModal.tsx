@@ -83,7 +83,7 @@ export default function AddReviewModal({
         {({ values, setFieldValue, isSubmitting }) => (
           <Form className={css.form}>
             <div className={css.field}>
-              <span className={css.label}>Ваша оцінка*</span>
+              <span className={css.label}>Ваш відгук</span>
 
               <div className={css.stars} role="radiogroup" aria-label="Оцінка">
                 {[1, 2, 3, 4, 5].map((star) => (
@@ -119,7 +119,7 @@ export default function AddReviewModal({
                 name="description"
                 rows={5}
                 maxLength={200}
-                placeholder="Поділіться своїми враженнями"
+                placeholder="Напишіть ваш відгук"
                 className={css.textarea}
               />
 
