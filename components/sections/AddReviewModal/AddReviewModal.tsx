@@ -83,13 +83,9 @@ export default function AddReviewModal({
         {({ values, setFieldValue, isSubmitting }) => (
           <Form className={css.form}>
             <div className={css.field}>
-              <span className={css.label}>Ваш відгук</span>
-
-              
-
-            <div className={css.field}>
+              <div className={css.field}>
               <label htmlFor="review-description" className={css.label}>
-                Відгук
+                Ваш відгук
               </label>
 
               <Field

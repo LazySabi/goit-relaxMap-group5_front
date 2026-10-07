@@ -14,7 +14,7 @@
   font-size: 26px;
   line-height: 1.2;
   text-align: center;
-  color: var(--text-primary);
+  color: #1b391b;
 }
 
 .form {
@@ -30,9 +30,9 @@
 }
 
 .label {
-  font-weight: 700;
+  font-weight: 500;
   font-size: 14px;
-  color: var(--text-primary);
+  color: #1b391b;
 }
 
 .stars {
@@ -44,9 +44,10 @@
   padding: 0;
   border: none;
   background: none;
-  font-size: 32px;
+  font-size: 17px;
   line-height: 1;
-  color: #d9c3b8;
+  color: transparent;
+  -webkit-text-stroke: 1.5px #000;
   cursor: pointer;
   transition:
     color 200ms ease,
@@ -59,7 +60,7 @@
 }
 
 .starActive {
-  color: var(--text-primary);
+  color: #000;
 }
 
 .textarea {
@@ -67,7 +68,7 @@
   padding: 12px;
   border: var(--border-primary);
   border-radius: 8px;
-  background-color: #fff;
+  background-color: var(--foreground);
   font: inherit;
   font-size: 16px;
   resize: vertical;
@@ -93,8 +94,9 @@
 .actions {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 8px;
+  width: 100%;
+  gap: 24px;
+  margin-top: 24px;
 }
 
 .primary,
@@ -122,7 +124,7 @@
 .secondary {
   border: var(--border-primary);
   background-color: transparent;
-  color: var(--text-primary);
+  color: var(--color-scheme-1-text, #1b391b);
 }
 
 .secondary:hover:not(:disabled),
@@ -148,6 +150,8 @@
 
   .actions {
     flex-direction: row;
+    max-width: 430px;
+    margin: 0 auto;
   }
 
   .primary,

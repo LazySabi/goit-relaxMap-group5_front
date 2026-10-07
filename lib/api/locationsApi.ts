@@ -63,7 +63,11 @@ export const getLocationById = async (
   locationId: string,
 ): Promise<Location> => {
   const { data } = await api.get<Location>(`/locations/${locationId}`);
-
+console.log(
+    "Ответ GET /locations/:id:",
+    JSON.stringify(data, null, 2),
+  );
+  
   return data;
 };
 
