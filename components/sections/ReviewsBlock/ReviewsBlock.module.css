@@ -53,6 +53,7 @@
   padding: 12px;
   border: 1px solid var(--color-scheme-1-border, #e0c8c0);
   background: var(--color-coral-lighter, #fde8dc);
+  color: var(--text-third, #4c2613);
   cursor: pointer;
   font-size: 16px;
   display: flex;
@@ -80,4 +81,9 @@
   .section {
     padding: 64px 72px;
   }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
 }

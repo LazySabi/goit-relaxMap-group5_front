@@ -38,7 +38,7 @@ const Footer = () => {
             ))}
           </ul>
 
-          <nav aria-label="Навігація" className={css.nav}>
+          <nav aria-label="Навігація">
             <ul className={css.navList}>
               {navLinks.map(({ href, label }) => (
                 <li key={href}>

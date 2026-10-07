@@ -41,18 +41,6 @@ const Header = () => {
     };
   }, [isMenuOpen]);
 
-  useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 1440px)");
-
-    const handleChange = (event: MediaQueryListEvent) => {
-      if (event.matches) setIsMenuOpen(false);
-    };
-
-    desktop.addEventListener("change", handleChange);
-
-    return () => desktop.removeEventListener("change", handleChange);
-  }, []);
-
   const closeMenu = () => setIsMenuOpen(false);
 
   const handleLogout = async () => {
