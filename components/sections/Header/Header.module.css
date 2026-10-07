@@ -248,17 +248,23 @@
   overflow: hidden;
 
   max-height: 0;
+  visibility: hidden;
 
   background: var(--background);
 
   border-bottom: 0 solid transparent;
 
-  transition: max-height 0.25s ease;
+  transition:
+    max-height 0.25s ease,
+    visibility 0s linear 0.25s;
 }
 
 .mobileMenuOpen {
   max-height: 520px;
+  visibility: visible;
   border-bottom: var(--border-primary);
+
+  transition: max-height 0.25s ease;
 }
 
 .mobileNavList {
@@ -314,46 +320,22 @@
     height: 80px;
   }
 
-  .navGroup {
-    display: flex;
-    align-items: center;
-
-    gap: 24px;
+  .mobileNavList {
+    padding: 8px 32px 16px;
   }
 
-  .navList {
-    gap: 18px;
+  .mobileAuthActions {
+    flex-direction: row;
   }
 
-  .navLink {
-    font-size: 13px;
+  .mobileAuthActions,
+  .mobileAuthorizedActions {
+    padding: 4px 32px 24px;
   }
 
-  .authorizedActions {
-    gap: 10px;
-  }
-
-  .shareLocationBtn {
-    padding: 8px 12px;
-
-    font-size: 12px;
-  }
-
-  .userName {
-    max-width: 64px;
-
-    font-size: 12px;
-  }
-
-  .avatar,
-  .avatarFallback {
-    width: 28px;
-    height: 28px;
-  }
-
-  .burger,
-  .mobileMenu {
-    display: none;
+  .mobileAuthActions .signInBtn,
+  .mobileAuthActions .signUpBtn {
+    flex: 1;
   }
 }
 
@@ -367,7 +349,15 @@
   }
 
   .navGroup {
+    display: flex;
+    align-items: center;
+
     gap: 40px;
+  }
+
+  .burger,
+  .mobileMenu {
+    display: none;
   }
 
   .navList {
