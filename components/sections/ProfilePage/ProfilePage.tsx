@@ -109,7 +109,11 @@ export default function ProfilePage({ userId }: ProfilePageProps) {
       <section className={css.locations} ref={sectionRef}>
         <div className={`container ${css.inner}`}>
           {isLocationsLoading && (
-            <div className={css.loader} role="status" aria-label="Завантаження" />
+            <div
+              className={css.loader}
+              role="status"
+              aria-label="Завантаження"
+            />
           )}
 
           {isLocationsError && (
@@ -118,9 +122,11 @@ export default function ProfilePage({ userId }: ProfilePageProps) {
             </p>
           )}
 
-          {!isLocationsLoading && !isLocationsError && locations.length === 0 && (
-            <ProfilePlaceholder isOwnProfile={isOwnProfile} />
-          )}
+          {!isLocationsLoading &&
+            !isLocationsError &&
+            locations.length === 0 && (
+              <ProfilePlaceholder isOwnProfile={isOwnProfile} />
+            )}
 
           {locations.length > 0 && (
             <ul className={css.grid}>
@@ -129,12 +135,6 @@ export default function ProfilePage({ userId }: ProfilePageProps) {
                   <LocationCard
                     location={location}
                     typeName={typeNames[location.locationType]}
-                    // Кнопка редагування — тільки у власному профілі
-                    // і тільки для локацій, автор яких — поточний юзер
-                    canEdit={
-                      isOwnProfile &&
-                      String(location.ownerId) === String(user._id)
-                    }
                   />
                 </li>
               ))}
