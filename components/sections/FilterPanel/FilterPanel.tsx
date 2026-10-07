@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getLocationTypes, getRegions } from '@/lib/api/locationsApi';
@@ -41,6 +41,21 @@ export default function FilterPanel() {
     queryFn: getLocationTypes,
     staleTime: Infinity,
   });
+
+  const sortedRegions = useMemo(
+    () =>
+      [...(Array.isArray(regions) ? regions : [])].sort((a, b) =>
+        a.region.localeCompare(b.region, 'uk'),
+      ),
+    [regions],
+  );
+  const sortedTypes = useMemo(
+    () =>
+      [...(Array.isArray(types) ? types : [])].sort((a, b) =>
+        a.type.localeCompare(b.type, 'uk'),
+      ),
+    [types],
+  );
 
   const region = searchParams.get('region') ?? '';
   const sort = searchParams.get('sort') ?? '';
@@ -99,7 +114,7 @@ export default function FilterPanel() {
           onChange={(e) => updateParams({ region: e.target.value })}
         >
           <option value="">Регіон</option>
-          {regions.map((r) => (
+          {sortedRegions.map((r) => (
             <option key={r._id} value={r.slug}>
               {r.region}
             </option>
@@ -123,7 +138,7 @@ export default function FilterPanel() {
 
         {typesOpen && (
           <ul className={css.typeList}>
-            {types.map((t) => (
+            {sortedTypes.map((t) => (
               <li key={t._id}>
                 <label className={css.checkbox}>
                   <input

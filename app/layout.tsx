@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import { Toaster } from "react-hot-toast";
 
 import "./globals.css";
 
@@ -8,10 +7,12 @@ import Header from "@/components/sections/Header/Header";
 import Footer from "@/components/sections/Footer/Footer";
 import TanStackQueryProvider from "@/components/providers/TanStackQueryProvider/TanStackQueryProvider";
 import AuthProvider from "@/components/providers/AuthProvider/AuthProvider";
+import EditProfileModal from "@/components/profile/EditProfileModal/EditProfileModal";
+import { Toaster } from "react-hot-toast";
 
 const montserrat = Montserrat({
   subsets: ["latin", "cyrillic"],
-  weight: ["400", "700"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-montserrat",
   display: "swap",
 });
@@ -31,13 +32,15 @@ export default function RootLayout({
   return (
     <html lang="uk" className={montserrat.variable}>
       <body>
-        <Toaster position="top-center" />
         <TanStackQueryProvider>
           <AuthProvider>
             <Header />
             {children}
             {modal}
             <Footer />
+            <EditProfileModal />
+
+            <Toaster position="top-right" />
           </AuthProvider>
         </TanStackQueryProvider>
       </body>

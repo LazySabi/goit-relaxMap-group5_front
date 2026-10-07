@@ -1,4 +1,4 @@
-import Link from "@/components/ui/Link/Link";
+import Link from "next/link";
 import css from "./ProfilePlaceholder.module.css";
 
 interface ProfilePlaceholderProps {
@@ -14,13 +14,13 @@ export default function ProfilePlaceholder({
 
   const linkText = isOwnProfile ? "Поділитися локацією" : "Назад до локацій";
 
-  const href = isOwnProfile ? "/locations/action/create" : "/locations";
+  const href = isOwnProfile ? "/locations/add" : "/locations";
 
   return (
     <div className={css.placeholder}>
       <p className={css.text}>{text}</p>
 
-      <Link href={href} variant="primary" className={css.actionLink}>
+      <Link href={href} className={css.actionLink}>
         {linkText}
       </Link>
     </div>

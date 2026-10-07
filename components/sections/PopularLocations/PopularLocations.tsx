@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper/types";
@@ -19,45 +19,34 @@ import {
 import css from "./PopularLocations.module.css";
 
 const PopularLocations = () => {
-  const [locations, setLocations] = useState<Location[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
-
   const swiperRef = useRef<SwiperType | null>(null);
 
-  // Получаем список типов локаций
   const { data: types = [] } = useQuery({
     queryKey: ["location-types"],
     queryFn: getLocationTypes,
     staleTime: Infinity,
   });
 
-  // Создаём соответствие: slug → название
-  // hory → Гори
-  // more → Море
+
   const typeNames = Object.fromEntries(
-    types.map((type) => [type.slug, type.type]),
+    (Array.isArray(types) ? types : []).map((type) => [type.slug, type.type]),
   );
 
-  useEffect(() => {
-    const loadPopularLocations = async () => {
-      try {
-        setIsLoading(true);
-        setError("");
+  const {
+    data: locations = [],
+    isLoading,
+    isError,
+  } = useQuery<Location[]>({
+    queryKey: ["popular-locations"],
+    queryFn: async () => {
+      const data = await getPopularLocations();
+    
+      return Array.isArray(data) ? data : [];
+    },
+    staleTime: 1000 * 60,
+  });
 
-        const data = await getPopularLocations();
-
-        setLocations(data);
-      } catch (error) {
-        console.error(error);
-        setError("Не вдалося завантажити популярні локації.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadPopularLocations();
-  }, []);
+  const hasLocations = locations.length > 0;
 
   return (
     <section
@@ -75,15 +64,15 @@ const PopularLocations = () => {
           </Link>
         </div>
 
-        {isLoading && (
-          <p className={css.message}>Завантаження...</p>
+        {isLoading && <p className={css.message}>Завантаження...</p>}
+
+        {!isLoading && isError && (
+          <p className={css.message}>
+            Не вдалося завантажити популярні локації.
+          </p>
         )}
 
-        {!isLoading && error && (
-          <p className={css.message}>{error}</p>
-        )}
-
-        {!isLoading && !error && locations.length > 0 && (
+        {!isLoading && !isError && hasLocations && (
           <>
             <Swiper
               className={css.slider}
@@ -94,19 +83,12 @@ const PopularLocations = () => {
               spaceBetween={24}
               slidesPerView={1}
               breakpoints={{
-                768: {
-                  slidesPerView: 2,
-                },
-                1440: {
-                  slidesPerView: 3,
-                },
+                768: { slidesPerView: 2 },
+                1440: { slidesPerView: 3 },
               }}
             >
               {locations.map((location) => (
-                <SwiperSlide
-                  key={location._id}
-                  className={css.slide}
-                >
+                <SwiperSlide key={location._id} className={css.slide}>
                   <LocationCard
                     location={location}
                     typeName={typeNames[location.locationType]}
@@ -137,10 +119,8 @@ const PopularLocations = () => {
           </>
         )}
 
-        {!isLoading && !error && locations.length === 0 && (
-          <p className={css.message}>
-            Популярних локацій поки немає.
-          </p>
+        {!isLoading && !isError && !hasLocations && (
+          <p className={css.message}>Популярних локацій поки немає.</p>
         )}
       </div>
     </section>

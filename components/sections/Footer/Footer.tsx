@@ -38,7 +38,7 @@ const Footer = () => {
             ))}
           </ul>
 
-          <nav aria-label="Навігація">
+          <nav aria-label="Навігація" className={css.nav}>
             <ul className={css.navList}>
               {navLinks.map(({ href, label }) => (
                 <li key={href}>
@@ -60,3 +60,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

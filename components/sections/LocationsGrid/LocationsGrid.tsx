@@ -3,16 +3,19 @@
 import { useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+
 import {
   getLocations,
   getLocationTypes,
   type LocationsQuery,
   type LocationsSort,
 } from '@/lib/api/locationsApi';
+
 import LocationCard from '../LocationCard/LocationCard';
 import css from './LocationsGrid.module.css';
 
 const PER_PAGE = 9;
+
 const SORT_VALUES: LocationsSort[] = ['popular', 'rating', 'newest'];
 
 export default function LocationsGrid() {
@@ -20,6 +23,7 @@ export default function LocationsGrid() {
   const gridRef = useRef<HTMLUListElement>(null);
 
   const sortParam = searchParams.get('sort');
+
   const sort: LocationsSort = SORT_VALUES.includes(sortParam as LocationsSort)
     ? (sortParam as LocationsSort)
     : 'popular';
@@ -32,16 +36,26 @@ export default function LocationsGrid() {
     sort,
   };
 
-  const { data: types = [] } = useQuery({
+  const { data: types = [], isLoading: isTypesLoading } = useQuery({
     queryKey: ['location-types'],
     queryFn: getLocationTypes,
     staleTime: Infinity,
   });
-  const typeNames = Object.fromEntries(types.map((t) => [t.slug, t.type]));
+
+  const typeNames = Object.fromEntries(
+    (Array.isArray(types) ? types : []).flatMap((type) => [
+      [type.slug, type.type],
+      [type._id, type.type],
+      [type.type, type.type],
+    ]),
+  );
 
   const {
     data,
     isLoading,
+    isError,
+    error,
+    refetch,
     isFetching,
     isFetchingNextPage,
     hasNextPage,
@@ -50,20 +64,25 @@ export default function LocationsGrid() {
     queryKey: ['locations', query],
     queryFn: ({ pageParam }) => getLocations({ ...query, page: pageParam }),
     initialPageParam: 1,
-    getNextPageParam: (last) =>
-      last.page < last.totalPages ? last.page + 1 : undefined,
+    getNextPageParam: (lastPage) =>
+      lastPage.hasNextPage || lastPage.page < lastPage.totalPages
+        ? lastPage.page + 1
+        : undefined,
   });
 
-  const allLocations = data?.pages.flatMap((p) => p.data) ?? [];
+  const allLocations = data?.pages.flatMap((page) => page.data ?? []) ?? [];
+
   const locations = Array.from(
-    new Map(allLocations.map((loc) => [loc._id, loc])).values(),
+    new Map(allLocations.map((location) => [location._id, location])).values(),
   );
 
   const handleShowMore = async () => {
-    const prevCount = locations.length;
+    const previousCount = locations.length;
+
     await fetchNextPage();
+
     requestAnimationFrame(() => {
-      gridRef.current?.children[prevCount]?.scrollIntoView({
+      gridRef.current?.children[previousCount]?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       });
@@ -72,10 +91,25 @@ export default function LocationsGrid() {
 
   if (
     isLoading ||
-    (isFetching && !isFetchingNextPage && locations.length === 0)
+    isTypesLoading ||
+    (isFetching && !isFetchingNextPage && locations.length === 0 && !isError)
   ) {
     return (
       <div className={css.loader} role="status" aria-label="Завантаження" />
+    );
+  }
+
+  if (isError && locations.length === 0) {
+    console.error('Помилка завантаження локацій:', error);
+
+    return (
+      <div className={css.empty}>
+        <p className={css.emptyTitle}>Не вдалося завантажити локації</p>
+        <p>Перевірте з&apos;єднання та спробуйте ще раз.</p>
+        <button type="button" className={css.moreBtn} onClick={() => refetch()}>
+          Спробувати знову
+        </button>
+      </div>
     );
   }
 
@@ -91,11 +125,11 @@ export default function LocationsGrid() {
   return (
     <>
       <ul className={css.grid} ref={gridRef}>
-        {locations.map((loc) => (
-          <li key={loc._id} className={css.item}>
+        {locations.map((location) => (
+          <li key={location._id} className={css.item}>
             <LocationCard
-              location={loc}
-              typeName={typeNames[loc.locationType]}
+              location={location}
+              typeName={typeNames[location.locationType] ?? location.locationType}
             />
           </li>
         ))}

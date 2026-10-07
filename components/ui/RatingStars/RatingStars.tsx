@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import "../common.module.css";
 import css from "./RatingStars.module.css";
 import Icon from "../Icon/Icon";
 

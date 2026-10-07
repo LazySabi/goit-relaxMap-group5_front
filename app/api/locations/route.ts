@@ -1,30 +1,43 @@
 import { NextRequest, NextResponse } from "next/server";
-import { api } from "../api";
-import { isAxiosError } from "axios";
-import {logErrorResponse} from "../auth/_utils/utils";
-import { Location } from "@/types/location";
 import { cookies } from "next/headers";
+import { isAxiosError } from "axios";
 
-export interface LocationsResponse {
+import { api } from "../api";
+import { logErrorResponse } from "../auth/_utils/utils";
+import type { Location } from "@/types/location";
+
+type BackendLocationsResponse = {
+  data: Location[];
+  pagination: {
+    page: number;
+    limit: number;
+    totalItems: number;
+    totalPages: number;
+  };
+};
+
+export type LocationsResponse = {
+  data: Location[];
   page: number;
   limit: number;
+  totalItems: number;
   totalPages: number;
-  totalLocations: number;
-  locations: Location[];
-}
+};
 
 export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
-    const page = Number(searchParams.get("page") ?? 1);
-    const limit = Number(searchParams.get("limit") ?? 5);
-    const region = searchParams.get("region");
-    const type = searchParams.get("type");
-    const search = searchParams.get("search");
-    const sortBy = searchParams.get("sortBy");
-    const sortDirection = searchParams.get("sortDirection");
 
-    const locationsResponse = await api.get<LocationsResponse>(
+    const page = Number(searchParams.get("page") ?? 1);
+    const limit = Number(searchParams.get("limit") ?? 9);
+
+    const region = searchParams.get("region") || undefined;
+    const type = searchParams.get("type") || undefined;
+    const search = searchParams.get("search") || undefined;
+
+    const sort = searchParams.get("sort") ?? "popular";
+
+    const response = await api.get<BackendLocationsResponse>(
       "/api/locations",
       {
         params: {
@@ -33,61 +46,91 @@ export async function GET(req: NextRequest) {
           region,
           type,
           search,
-          sortBy,
-          sortDirection,
+          sort,
         },
       },
     );
 
-    return NextResponse.json(locationsResponse.data, {
-      status: locationsResponse.status,
-    });
+    const result: LocationsResponse = {
+      data: response.data.data,
+      page: response.data.pagination.page,
+      limit: response.data.pagination.limit,
+      totalItems: response.data.pagination.totalItems,
+      totalPages: response.data.pagination.totalPages,
+    };
+
+    return NextResponse.json(
+       result,
+      {
+        status: 200,
+      },
+    );
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error);
+
       return NextResponse.json(
         {
           error: error.message,
-          response: error?.response?.data,
+          response: error.response?.data,
         },
-        { status: error.status },
+        {
+          status: error.response?.status ?? 500,
+        },
       );
     }
 
     logErrorResponse(error);
+
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      {
+        error: "Internal server error",
+      },
+      {
+        status: 500,
+      },
     );
   }
 }
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const cookieStore = await cookies();
+
     const response = await api.post("/api/locations", formData, {
       headers: {
         Cookie: cookieStore.toString(),
       },
     });
+
     return NextResponse.json(response.data, {
       status: response.status,
     });
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error);
+
       return NextResponse.json(
         {
           error: error.message,
           response: error.response?.data,
         },
-        { status: error.status },
+        {
+          status: error.response?.status ?? 500,
+        },
       );
     }
-    logErrorResponse({ message: (error as Error).message });
+
+    logErrorResponse(error);
+
     return NextResponse.json(
-      { error: "Internal error server" },
-      { status: 500 },
+      {
+        error: "Internal server error",
+      },
+      {
+        status: 500,
+      },
     );
   }
 }
