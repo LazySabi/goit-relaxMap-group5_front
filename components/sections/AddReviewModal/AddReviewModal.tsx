@@ -85,28 +85,7 @@ export default function AddReviewModal({
             <div className={css.field}>
               <span className={css.label}>Ваш відгук</span>
 
-              <div className={css.stars} role="radiogroup" aria-label="Оцінка">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <button
-                    key={star}
-                    type="button"
-                    role="radio"
-                    aria-checked={values.rate === star}
-                    aria-label={`${star} з 5`}
-                    className={
-                      star <= values.rate
-                        ? `${css.star} ${css.starActive}`
-                        : css.star
-                    }
-                    onClick={() => setFieldValue("rate", star)}
-                  >
-                    ★
-                  </button>
-                ))}
-              </div>
-
-              <ErrorMessage name="rate" component="span" className={css.error} />
-            </div>
+              
 
             <div className={css.field}>
               <label htmlFor="review-description" className={css.label}>
@@ -134,6 +113,28 @@ export default function AddReviewModal({
               />
             </div>
 
+<div className={css.stars} role="radiogroup" aria-label="Оцінка">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    type="button"
+                    role="radio"
+                    aria-checked={values.rate === star}
+                    aria-label={`${star} з 5`}
+                    className={
+                      star <= values.rate
+                        ? `${css.star} ${css.starActive}`
+                        : css.star
+                    }
+                    onClick={() => setFieldValue("rate", star)}
+                  >
+                    ★
+                  </button>
+                ))}
+              </div>
+
+              <ErrorMessage name="rate" component="span" className={css.error} />
+            </div>
             <div className={css.actions}>
               <button
                 type="button"
