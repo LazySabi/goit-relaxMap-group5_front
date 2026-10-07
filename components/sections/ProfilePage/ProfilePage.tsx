@@ -135,6 +135,10 @@ export default function ProfilePage({ userId }: ProfilePageProps) {
                   <LocationCard
                     location={location}
                     typeName={typeNames[location.locationType]}
+                    canEdit={
+                      isOwnProfile &&
+                      String(location.ownerId) === String(user._id)
+                    }
                   />
                 </li>
               ))}
