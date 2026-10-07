@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Location } from '@/lib/api/locationsApi';
-import StarRating from '@/components/sections/ReviewsBlock/StarRating';
+import RatingStars from '@/components/ui/RatingStars/RatingStars';
 import css from './LocationCard.module.css';
 
 type Props = {
@@ -27,12 +27,8 @@ export default function LocationCard({ location, typeName }: Props) {
       <div className={css.info}>
         <p className={css.type}>{typeName ?? location.locationType}</p>
 
-        <div
-          className={css.rating}
-          role="img"
-          aria-label={`Рейтинг ${rate} з 5`}
-        >
-          <StarRating rate={rate} />
+        <div className={css.rating}>
+          <RatingStars value={rate} />
         </div>
 
         <h3 className={css.name}>{location.name}</h3>
