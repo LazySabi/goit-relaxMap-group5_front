@@ -8,7 +8,6 @@
 
   width: calc(100% - 40px);
   max-width: 334px;
-  height: 382px;
   padding: 64px 20px;
 
   border-radius: 24px;
@@ -27,6 +26,7 @@
 .title {
   margin: 0;
 
+  color: #000;
   font-weight: 700;
   font-size: 26px;
   line-height: 1.2;
@@ -37,6 +37,7 @@
 .text {
   margin: 0;
 
+  color: #000;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.5;
@@ -46,21 +47,58 @@
 .actions {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  height: 120px;
+  gap: 24px;
   width: 100%;
 }
 
 .actions > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  height: 48px;
+  min-height: 48px;
+  padding: 11px 24px;
   flex: none;
+
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.actions > button:first-child {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--text-third);
+}
+
+.actions > button:first-child:hover,
+.actions > button:first-child:focus-visible {
+  border-color: var(--button-primary);
+  background-color: var(--button-primary);
+  color: var(--text-secondary);
+}
+
+.actions > button:last-child {
+  border: 1px solid var(--button-primary);
+  background-color: var(--button-primary);
+  color: var(--text-secondary);
+}
+
+.actions > button:last-child:hover,
+.actions > button:last-child:focus-visible {
+  background-color: var(--foreground);
+  color: var(--text-third);
 }
 
 @media screen and (min-width: 768px) {
   .modal {
     max-width: 704px;
-    height: 286px;
     padding: 64px 32px;
   }
 
@@ -73,18 +111,32 @@
   .actions > button {
     flex: 1;
     width: auto;
-    height: 48px;
+  }
+
+  .title {
+    font-size: 32px;
   }
 }
 
 @media screen and (min-width: 1440px) {
   .modal {
     max-width: 768px;
-    height: 312px;
     padding: 64px;
   }
 
-  .actions {
-    height: 48px;
+  .title {
+    font-size: 48px;
+  }
+
+  .text {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .actions > button {
+    padding: 8px 24px;
+    font-size: 20px;
+    line-height: 30px;
   }
 }
+
