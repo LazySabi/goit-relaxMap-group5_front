@@ -1,40 +1,20 @@
 import css from "./StarRating.module.css";
 
-const SPRITE = "/sprite.svg";
-
 interface StarRatingProps {
   rate: number;
-  size?: number;
 }
 
-export default function StarRating({ rate, size = 16 }: StarRatingProps) {
-
-  const value = Math.min(5, Math.max(0, Math.round((Number(rate) || 0) * 2) / 2));
-
+export default function StarRating({ rate }: StarRatingProps) {
   return (
-    <div
-      className={css.stars}
-      role="img"
-      aria-label={`Рейтинг ${value} з 5`}
-    >
+    <div className={css.stars}>
       {[1, 2, 3, 4, 5].map((star) => {
-        const icon =
-          value >= star
-            ? "star_filled"
-            : value >= star - 0.5
-              ? "star_half"
-              : "star_empty";
+        const filled = rate >= star;
+        const half = !filled && rate >= star - 0.5;
 
         return (
-          <svg
-            key={star}
-            className={css.star}
-            width={size}
-            height={size}
-            aria-hidden="true"
-          >
-            <use href={`${SPRITE}#${icon}`} />
-          </svg>
+          <span key={star} className={css.star}>
+            {filled ? "★" : half ? "⯨" : "☆"}
+          </span>
         );
       })}
     </div>
