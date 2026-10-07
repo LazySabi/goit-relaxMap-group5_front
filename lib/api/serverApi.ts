@@ -42,7 +42,7 @@ export const fetchLocationById = async(id: string): Promise<Location> => {
 }
 
 export const getUserById = async (userId: string): Promise<User> => {
-  const cookieStore = await cookies;
+  const cookieStore = await cookies();
   const { data } = await api.get<User>(`/users/${userId}`, {
     headers: {
       Cookie: cookieStore.toString(),

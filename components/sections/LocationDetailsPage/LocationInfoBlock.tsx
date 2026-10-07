@@ -31,9 +31,13 @@ export default function LocationInfoBlock({
           </p>
           <p className={css.text}>
   <span>Автор статті:</span>{" "}
-  <Link href={`/profile/${location.author?.id}`} className={css.authorLink}>
-    {author?.name}
-  </Link>
+  {author?.id ? (
+    <Link href={`/profile/${author.id}`} className={css.authorLink}>
+      {author.name}
+    </Link>
+  ) : (
+    author?.name
+  )}
 </p>
         </div>
 
