@@ -1,16 +1,4 @@
-.stars {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  color: #000;
-}
-
 .star {
-  flex-shrink: 0;
-  gap: 2px;
-}
-
-.star {
-  font-size: 18px;
-  color: #f5a623;
+  font-size: 17px;
+  color: #000;
 }

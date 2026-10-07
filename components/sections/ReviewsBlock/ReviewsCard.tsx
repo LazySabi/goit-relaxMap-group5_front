@@ -6,10 +6,8 @@ export interface Review {
   rate: number;
   description: string;
   userName: string;
-  locationId?: {
-    _id: string;
-    name: string;
-  };
+  locationType?: string;
+  locationName?: string;
 }
 
 const ReviewCard = ({ review }: { review: Review }) => {
@@ -18,12 +16,10 @@ const ReviewCard = ({ review }: { review: Review }) => {
       <StarRating rate={review.rate} />
 
       <p className={css.text}>{review.description}</p>
-
       <div className={css.authorInfo}>
         <p className={css.author}>{review.userName}</p>
-
-        {review.locationId?.name && (
-          <p className={css.type}>{review.locationId.name}</p>
+        {review.locationName && (
+          <p className={css.type}>{review.locationName}</p>
         )}
       </div>
     </div>
