@@ -24,7 +24,7 @@
 }
 
 .authorLink {
-  color: inherit;
+  color: var(--color-scheme-2-text, #1b391b);
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;

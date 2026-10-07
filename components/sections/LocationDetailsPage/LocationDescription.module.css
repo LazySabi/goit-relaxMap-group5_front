@@ -6,7 +6,7 @@
 
 .text {
   margin: 0;
-  color: var(--text-primary);
+  color: var(--color-scheme-2-text, #1b391b);
   line-height: 1.5;
   white-space: pre-line;
   overflow-wrap: anywhere;
