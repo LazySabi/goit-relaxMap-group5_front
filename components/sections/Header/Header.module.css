@@ -13,7 +13,7 @@
   justify-content: space-between;
 
   gap: 16px;
-  height: 64px;
+  height: 71px;
 }
 
 .navGroup {
@@ -64,11 +64,14 @@
 
   white-space: nowrap;
 
-  font-weight: 600;
-  font-size: 14px;
+  height: 32px;
+  padding: 0 10px;
 
-  border-radius: 100px;
-  padding: 10px 20px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+
+  border-radius: 6px;
 
   border: var(--border-primary);
 
@@ -80,7 +83,7 @@
 
 .signInBtn {
   color: var(--text-primary);
-  background: transparent;
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .signInBtn:hover,
@@ -116,13 +119,14 @@
   align-items: center;
   justify-content: center;
 
-  min-height: 38px;
-  padding: 8px 14px;
+  height: 32px;
+  padding: 0 10px;
 
   white-space: nowrap;
 
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
 
   color: #fff;
   background-color: var(--button-primary);
@@ -146,7 +150,7 @@
 .userInfo {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 
   min-width: 0;
 
@@ -155,8 +159,8 @@
 
 .avatar,
 .avatarFallback {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
 
   flex-shrink: 0;
 
@@ -217,98 +221,141 @@
 }
 
 /* ======================
-   BURGER
+   TABLET ACTIONS + BURGER
 ====================== */
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.tabletActions {
+  display: none;
+  align-items: center;
+  gap: 16px;
+}
 
 .burger {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
 
   margin: 0;
   padding: 0;
 
-  border: none;
-
   color: var(--text-primary);
-  background: transparent;
+  background: rgba(0, 0, 0, 0.05);
+
+  border: var(--border-primary);
+  border-radius: 6px;
 
   cursor: pointer;
   flex-shrink: 0;
+
+  transition: background-color 0.2s ease;
+}
+
+.burger:hover,
+.burger:focus-visible {
+  background: var(--button-secondary-hover);
 }
 
 /* ======================
-   MOBILE MENU
+   MOBILE / TABLET MENU
+   (on top of the page below the header row, 72px = header height)
 ====================== */
 
 .mobileMenu {
-  overflow: hidden;
+  position: fixed;
+  top: 72px;
+  right: 0;
+  bottom: 0;
+  left: 0;
 
-  max-height: 0;
-  visibility: hidden;
+  overflow-y: auto;
+
+  padding: 24px 0 92px;
 
   background: var(--background);
 
-  border-bottom: 0 solid transparent;
+  opacity: 0;
+  visibility: hidden;
 
   transition:
-    max-height 0.25s ease,
-    visibility 0s linear 0.25s;
+    opacity 0.2s ease,
+    visibility 0s linear 0.2s;
 }
 
 .mobileMenuOpen {
-  max-height: 520px;
+  opacity: 1;
   visibility: visible;
-  border-bottom: var(--border-primary);
 
-  transition: max-height 0.25s ease;
+  transition: opacity 0.2s ease;
+}
+
+.mobileMenuInner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-height: 100%;
 }
 
 .mobileNavList {
   display: flex;
   flex-direction: column;
+  align-items: center;
 
-  padding: 8px 20px 16px;
+  gap: 32px;
 }
 
 .mobileNavLink {
   display: block;
 
-  padding: 12px 0;
-
-  font-weight: 500;
+  font-weight: 400;
   font-size: 16px;
+  line-height: 1.5;
 
   color: var(--text-primary);
 
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  transition: color 0.2s ease;
 }
 
-.mobileAuthActions,
-.mobileAuthorizedActions {
+.mobileNavLink:hover,
+.mobileNavLink:focus-visible {
+  color: var(--button-primary);
+}
+
+.mobileActions {
   display: flex;
   flex-direction: column;
 
-  gap: 10px;
-
-  padding: 4px 20px 20px;
+  gap: 24px;
 }
 
-.mobileAuthActions .signInBtn,
-.mobileAuthActions .signUpBtn,
-.mobileAuthorizedActions .shareLocationBtn {
+.mobileActions .signInBtn,
+.mobileActions .signUpBtn,
+.mobileActions .shareLocationBtn {
   width: 100%;
 }
 
 .mobileUserRow {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
-  min-height: 44px;
+  gap: 8px;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+
+  background: rgba(0, 0, 0, 0.15);
 }
 
 /* ======================
@@ -316,26 +363,12 @@
 ====================== */
 
 @media screen and (min-width: 768px) {
-  .inner {
-    height: 80px;
+  .tabletActions {
+    display: flex;
   }
 
-  .mobileNavList {
-    padding: 8px 32px 16px;
-  }
-
-  .mobileAuthActions {
-    flex-direction: row;
-  }
-
-  .mobileAuthActions,
-  .mobileAuthorizedActions {
-    padding: 4px 32px 24px;
-  }
-
-  .mobileAuthActions .signInBtn,
-  .mobileAuthActions .signUpBtn {
-    flex: 1;
+  .mobileOnly {
+    display: none;
   }
 }
 
@@ -355,7 +388,7 @@
     gap: 40px;
   }
 
-  .burger,
+  .controls,
   .mobileMenu {
     display: none;
   }
@@ -373,17 +406,18 @@
   }
 
   .shareLocationBtn {
+    height: auto;
     min-height: 40px;
 
     padding: 9px 16px;
 
     font-size: 14px;
+    font-weight: 600;
+    line-height: normal;
   }
 
-  .avatar,
-  .avatarFallback {
-    width: 32px;
-    height: 32px;
+  .userInfo {
+    gap: 6px;
   }
 
   .userName {
@@ -399,8 +433,17 @@
 
   .signInBtn,
   .signUpBtn {
+    height: auto;
     padding: 12px 24px;
 
     font-size: 15px;
+    font-weight: 600;
+    line-height: normal;
+
+    border-radius: 100px;
+  }
+
+  .signInBtn {
+    background: transparent;
   }
 }

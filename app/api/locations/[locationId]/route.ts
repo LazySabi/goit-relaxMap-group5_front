@@ -23,7 +23,7 @@ export async function GET(request: Request, { params }: Props) {
       logErrorResponse(error.response?.data);
       return NextResponse.json(
         { error: error.message, response: error.response?.data },
-        { status: error.status },
+        { status: error.response?.status ?? 500 },
       );
     }
     logErrorResponse({ message: (error as Error).message });
@@ -38,9 +38,10 @@ export async function PATCH(request: Request, { params }: Props) {
     try {
     const cookieStore = await cookies();
     const { locationId } = await params;
-    const body = await request.json();
+    // Форма шле multipart/form-data (з фото), тому json() тут падав
+    const formData = await request.formData();
 
-    const res = await api.patch(`/api/locations/${locationId}`, body, {
+    const res = await api.patch(`/api/locations/${locationId}`, formData, {
       headers: {
         Cookie: cookieStore.toString(),
       },
@@ -51,7 +52,7 @@ export async function PATCH(request: Request, { params }: Props) {
       logErrorResponse(error.response?.data);
       return NextResponse.json(
         { error: error.message, response: error.response?.data },
-        { status: error.status }
+        { status: error.response?.status ?? 500 }
       );
     }
     logErrorResponse({ message: (error as Error).message });

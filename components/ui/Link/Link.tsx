@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import NextLink, { LinkProps as NextLinkProps } from "next/link";
-import "../common.module.css";
 import css from "./Link.module.css";
 
 type LinkProps = NextLinkProps & {
