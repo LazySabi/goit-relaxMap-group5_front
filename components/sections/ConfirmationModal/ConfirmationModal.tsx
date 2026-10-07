@@ -49,7 +49,9 @@ export default function ConfirmationModal({
     <Modal onClose={handleClose}>
       <div className={css.header}>
         <h2 className={css.title}>{title}</h2>
-        {subtitle && <p className={css.subtitle}>{subtitle}</p>}
+        {subtitle && (
+          <p className={css.subtitle}>{subtitle}</p>
+        )}
       </div>
 
       <div className={css.actions}>
